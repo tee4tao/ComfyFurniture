@@ -5,39 +5,42 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+import { Form } from "@/components/ui/form";
+import Link from "next/link";
+import CustomInput from "./CustomInput";
+import { authFormSchema } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: string }) => {
+  const router = useRouter();
+  const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
+      password: "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    try {
+      // Sign up with Appwrite
+      if (type === "sign-up") {
+        router.push("/sign-in");
+      }
+      if (type === "sign-in") {
+        console.log(values.email);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // finally {
+    //   setIsLoading(false);
+    // }
   }
   return (
-    <section className="flex flex-col justify-center items-center w-full h-screen">
-      <header>
-        <div className="flex items-center mb-7">
+    <section className="flex flex-col flex-center w-full min-h-screen p-4">
+      <header className="w-full max-w-96">
+        <div className="flex items-center mb-8">
           <Image
             src={"./icons/logo.svg"}
             alt="ComfyFurniture Logo"
@@ -46,9 +49,9 @@ const AuthForm = ({ type }: { type: string }) => {
           />
           <h1 className="font-bold text-2xl">ComfyFurniture</h1>
         </div>
-        <div>
-          <div className="text-2xl font-semibold capitalize mb-1">
-            {type === "sign-in" ? "sign-in" : "sign-up"}
+        <div className="mb-4">
+          <div className="text-2xl font-semibold capitalize">
+            {type === "sign-in" ? "sign in" : "sign up"}
           </div>
           <p className="text-gray-600">please enter your details</p>
         </div>
@@ -56,26 +59,52 @@ const AuthForm = ({ type }: { type: string }) => {
 
       {/* form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            // control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full max-w-96"
+        >
+          <CustomInput
+            name="email"
+            placeholder="Enter your email"
+            label="Email"
+            control={form.control}
           />
-          <Button type="submit">Submit</Button>
+          <CustomInput
+            name="password"
+            placeholder="Enter your password"
+            label="Password"
+            control={form.control}
+          />
+          {type === "sign-up" && (
+            <CustomInput
+              name="confirmPassword"
+              placeholder="Confirm password"
+              label="Confirm Password"
+              control={form.control}
+            />
+          )}
+          <Button
+            type="submit"
+            className="w-full text-white capitalize text-xl rounded-lg hover:bg-secondary hover:text-primary"
+          >
+            {type === "sign-in" ? "sign in" : "sign up"}
+          </Button>
         </form>
       </Form>
+
+      <footer className="mt-4 flex items-center gap-2">
+        <p className="text-gray-500 text-sm">
+          {type === "sign-in"
+            ? "Don't have an account?"
+            : "Already have an account?"}
+        </p>
+        <Link
+          href={type === "sign-in" ? "/sign-up" : "/sign-in"}
+          className="text-sm text-primary"
+        >
+          {type === "sign-in" ? "Sign up" : "Sign in"}
+        </Link>
+      </footer>
     </section>
   );
 };

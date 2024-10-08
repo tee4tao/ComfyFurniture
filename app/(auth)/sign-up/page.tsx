@@ -3,7 +3,7 @@ import React from "react";
 
 const SignUp = () => {
   return (
-    <section className="flex size-full">
+    <section className="flex-center size-full">
       <AuthForm type="sign-up" />
     </section>
   );

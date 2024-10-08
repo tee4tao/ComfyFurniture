@@ -3,7 +3,7 @@ import React from "react";
 
 const SignIn = () => {
   return (
-    <section className="flex size-full">
+    <section className="flex-center size-full">
       <AuthForm type="sign-in" />
     </section>
   );
