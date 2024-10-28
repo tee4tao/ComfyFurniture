@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const formSchema = authFormSchema(type);
+  // console.log(authFormSchema("sign-in"));
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,14 +23,14 @@ const AuthForm = ({ type }: { type: string }) => {
       password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       // Sign up with Appwrite
       if (type === "sign-up") {
         router.push("/sign-in");
       }
       if (type === "sign-in") {
-        console.log(values.email);
+        console.log(data);
       }
     } catch (error) {
       console.log(error);
@@ -46,6 +48,7 @@ const AuthForm = ({ type }: { type: string }) => {
             alt="ComfyFurniture Logo"
             width={50}
             height={50}
+            // className="w-auto h-auto"
           />
           <h1 className="font-bold text-2xl">ComfyFurniture</h1>
         </div>
@@ -76,12 +79,14 @@ const AuthForm = ({ type }: { type: string }) => {
             control={form.control}
           />
           {type === "sign-up" && (
-            <CustomInput
-              name="confirmPassword"
-              placeholder="Confirm password"
-              label="Confirm Password"
-              control={form.control}
-            />
+            <>
+              <CustomInput
+                name="confirmPassword"
+                placeholder="Confirm password"
+                label="Confirm Password"
+                control={form.control}
+              />
+            </>
           )}
           <Button
             type="submit"
