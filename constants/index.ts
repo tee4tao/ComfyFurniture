@@ -31,3 +31,18 @@ export const iconLinks = [
     url: "/cart",
   },
 ];
+
+export const rangeInfo = [
+  {
+    title: "Dining",
+    image: "/images/Dining.png",
+  },
+  {
+    title: "Living",
+    image: "/images/Living.png",
+  },
+  {
+    title: "Bedroom",
+    image: "/images/Bedroom.png",
+  },
+];

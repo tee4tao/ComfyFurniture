@@ -8,8 +8,9 @@ export const productType = defineType({
     defineField({
       name: 'image',
       title: 'Image',
-      type: 'array',
-      of: [{type: 'image'}],
+      type: 'image',
+      // type: 'array',
+      // of: [{type: 'image'}],
       // options:{hotspot:true},
     }),
     defineField({
