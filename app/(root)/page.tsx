@@ -1,6 +1,8 @@
 import Hero from "@/components/Hero";
 import OurProducts from "@/components/OurProducts";
 import ProductRange from "@/components/ProductRange";
+import Setup from "@/components/Setup";
+
 import { client } from "@/lib/sanity";
 
 async function getData() {
@@ -25,6 +27,7 @@ const page = async () => {
       <Hero />
       <ProductRange />
       <OurProducts data={data} />
+      <Setup />
     </div>
   );
 };

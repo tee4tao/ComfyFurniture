@@ -11,7 +11,7 @@ const ProductRange = () => {
           Lorem ipsum dolor sit amet consectetur, adipisicing elit.
         </p>
       </div>
-      <div className="flex gap-4 xl:gap-8">
+      <div className="flex gap-4 xl:gap-6">
         {rangeInfo.map((item, index) => (
           <div key={index} className="text-center space-y-2">
             <Image

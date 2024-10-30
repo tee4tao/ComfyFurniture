@@ -46,3 +46,15 @@ export const rangeInfo = [
     image: "/images/Bedroom.png",
   },
 ];
+
+export const setupImages = [
+  "/images/Rectangle 36.png",
+  "/images/Rectangle 37.png",
+  "/images/Rectangle 38.png",
+  "/images/Rectangle 39.png",
+  "/images/Rectangle 40.png",
+  "/images/Rectangle 41.png",
+  "/images/Rectangle 43.png",
+  "/images/Rectangle 44.png",
+  "/images/Rectangle 45.png",
+];
