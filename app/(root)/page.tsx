@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import HomePageMotion from "@/components/HomePageMotion";
 import OurProducts from "@/components/OurProducts";
 import ProductRange from "@/components/ProductRange";
 import Setup from "@/components/Setup";
@@ -23,10 +24,11 @@ const page = async () => {
   const data: product[] = await getData();
 
   return (
-    <div className="w-full flex flex-col items-center space-y-8 mb-4">
+    <div className="w-full flex flex-col items-center space-y-8 mb-4 ">
       <Hero />
       <ProductRange />
       <OurProducts data={data} />
+      <HomePageMotion />
       <Setup />
     </div>
   );
