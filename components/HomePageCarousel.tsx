@@ -47,7 +47,8 @@ const HomePageMotion = () => {
   }, [xTranslation, width, duration, mustFinish, rerender]);
 
   return (
-    <section className="container flex flex-col items-center px-2 overflow-x-hidden max-[669px]:w-[95vw]">
+    <section className=" w-[95vw] flex flex-col items-center px-2 overflow-x-hidden ">
+      {/* max-[669px]:w-[95vw] */}
       <motion.div
         className="flex gap-4"
         ref={ref}

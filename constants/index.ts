@@ -58,3 +58,46 @@ export const setupImages = [
   "/images/Rectangle 44.png",
   "/images/Rectangle 45.png",
 ];
+
+export const help = [
+  {
+    page: "Payment Options",
+    url: "/",
+  },
+  {
+    page: "Returns",
+    url: "/",
+  },
+  {
+    page: "Privacy Policies",
+    url: "/",
+  },
+];
+
+export const footer = [
+  {
+    id: 1,
+    title: "ComfyFurniture",
+    img: "./icons/logo.svg",
+    address: "University of Ibadan, Ibadan, Oyo State, Nigeria.",
+  },
+  {
+    id: 2,
+    title: "Links",
+    text: [
+      { id: 1, name: "Home", to: "/" },
+      { id: 2, name: "Shop", to: "/shop" },
+      { id: 3, name: "About", to: "/about" },
+      { id: 4, name: "Contact", to: "/contact" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Help",
+    text: [
+      { id: 1, name: "Payment Options", to: "/" },
+      { id: 2, name: "Return", to: "/" },
+      { id: 3, name: "Privacy Policies", to: "/" },
+    ],
+  },
+];
