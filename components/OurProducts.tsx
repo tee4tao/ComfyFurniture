@@ -1,5 +1,4 @@
-import Image from "next/image";
-import React from "react";
+import ProductCard from "./ProductCard";
 import { Button } from "./ui/button";
 
 const OurProducts = ({ data }: { data: product[] }) => {
@@ -9,22 +8,7 @@ const OurProducts = ({ data }: { data: product[] }) => {
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
         {data.map((product) => {
-          return (
-            <div key={product._id}>
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                width={200}
-                height={200}
-                className="object-cover w-full rounded-t-lg"
-              />
-              <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-40">
-                <h2 className="text-2xl font-semibold">{product.name}</h2>
-                <p className="text-gray-600 font-semibold">{product.details}</p>
-                <p className="font-semibold text-lg ">#{product.price}</p>
-              </div>
-            </div>
-          );
+          return <ProductCard product={product} key={product._id} />;
         })}
       </div>
 
