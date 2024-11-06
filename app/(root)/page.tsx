@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import HomePageMotion from "@/components/HomePageMotion";
+import HomePageCarousel from "@/components/HomePageCarousel";
 import OurProducts from "@/components/OurProducts";
 import ProductRange from "@/components/ProductRange";
 import Setup from "@/components/Setup";
@@ -28,7 +28,7 @@ const page = async () => {
       <Hero />
       <ProductRange />
       <OurProducts data={data} />
-      <HomePageMotion />
+      <HomePageCarousel />
       <Setup />
     </div>
   );

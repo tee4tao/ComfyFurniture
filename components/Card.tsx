@@ -9,8 +9,8 @@ const Card = ({ image }: { image: string }) => {
   return (
     <motion.div
       className="relative overflow-hidden h-[200px] min-w-[200px] bg-slate-400 rounded-xl flex justify-center items-center"
-      onHoverStart={() => setShowOverlay(true)}
-      onHoverEnd={() => setShowOverlay(false)}
+      onMouseEnter={() => setShowOverlay(true)}
+      onMouseLeave={() => setShowOverlay(false)}
     >
       <AnimatePresence>
         {showOverlay && (
