@@ -36,7 +36,18 @@ export const authFormSchema = (type: string) =>
         }),
       confirmPassword: type === "sign-in" ? z.string().optional() : z.string(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: passwordMismatchErrorMessage,
-      path: ["confirmPassword"],
-    });
+    .refine(
+      (data) => {
+        if (type === "sign-up") {
+          return data.password === data.confirmPassword;
+        }
+        return true;
+      },
+      {
+        message: passwordMismatchErrorMessage,
+        path: ["confirmPassword"],
+      }
+    );
+
+export const parseStringify = (value: unknown) =>
+  JSON.parse(JSON.stringify(value));

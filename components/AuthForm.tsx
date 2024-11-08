@@ -10,9 +10,14 @@ import Link from "next/link";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { signIn, signUp } from "@/lib/actions/users.action";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
   const formSchema = authFormSchema(type);
   // console.log(authFormSchema("sign-in"));
 
@@ -23,22 +28,35 @@ const AuthForm = ({ type }: { type: string }) => {
       password: "",
     },
   });
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     try {
       // Sign up with Appwrite
       if (type === "sign-up") {
+        const userData = {
+          email: data.email,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+        };
+        const newUser = await signUp(userData);
+        setUser(newUser);
         router.push("/sign-in");
       }
       if (type === "sign-in") {
-        console.log(data);
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) {
+          router.push("/");
+        }
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    // finally {
-    //   setIsLoading(false);
-    // }
-  }
+  };
   return (
     <section className="flex flex-col flex-center w-full min-h-screen p-4">
       <header className="w-full max-w-96">
@@ -91,8 +109,17 @@ const AuthForm = ({ type }: { type: string }) => {
           <Button
             type="submit"
             className="w-full text-white capitalize text-xl rounded-lg hover:bg-secondary hover:text-primary"
+            disabled={isLoading}
           >
-            {type === "sign-in" ? "sign in" : "sign up"}
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+              </>
+            ) : type === "sign-in" ? (
+              "Sign In"
+            ) : (
+              "Sign Up"
+            )}
           </Button>
         </form>
       </Form>
