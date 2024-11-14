@@ -12,8 +12,8 @@ async function getData() {
       details,
       "imageUrl": image.asset->url
   }`;
-
   const data = await client.fetch(query);
+
   return data;
 }
 
