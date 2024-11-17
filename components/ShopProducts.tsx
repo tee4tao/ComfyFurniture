@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiViewGrid } from "react-icons/hi";
 import { TbLayoutList } from "react-icons/tb";
 import { usePagination } from "@mantine/hooks";
@@ -8,7 +8,9 @@ import ProductCard from "@/components/ProductCard";
 import { Button } from "./ui/button";
 
 const ShopProducts = ({ data }: { data: product[] }) => {
-  const itemsPerPage = 4;
+  const [sortBy, setSortBy] = useState("");
+
+  const [itemsPerPage, setItemsPerPage] = useState(4);
 
   const [visibleData, setVisibleData] = useState(data.slice(0, itemsPerPage));
 
@@ -23,6 +25,27 @@ const ShopProducts = ({ data }: { data: product[] }) => {
     },
   });
   const [flex, setFlex] = useState(false);
+  useEffect(() => {
+    if (sortBy === "Descending") {
+      data.sort((a, b) => b.name.localeCompare(a.name));
+      setVisibleData(data.slice(0, itemsPerPage));
+      // pagination.setPage(1);
+    }
+    if (sortBy === "Ascending") {
+      data.sort((a, b) => a.name.localeCompare(b.name));
+      setVisibleData(data.slice(0, itemsPerPage));
+      // pagination.setPage(1);
+    }
+    if (sortBy === "Default" || sortBy === "") {
+      setVisibleData(data.slice(0, itemsPerPage));
+      // pagination.setPage(1);
+    }
+  }, [data, itemsPerPage, sortBy]);
+
+  const handleShowAmount = (e: React.ChangeEventHandler<HTMLInputElement>) => {
+    e.preventDefault();
+    setItemsPerPage(e.target.value);
+  };
 
   return (
     <section className="w-full flex flex-col flex-center">
@@ -39,10 +62,18 @@ const ShopProducts = ({ data }: { data: product[] }) => {
             />
           </div>
           <p className="font-bold text-gray-600 hidden max-md:block">|</p>
-          <p className=" max-md:text-sm">Showing 1-16 of 32 results</p>
+          <p className=" max-md:text-sm">
+            Showing 1 - {itemsPerPage} of {data.length} results
+          </p>
         </div>
         <div className="flex items-center justify-around gap-4">
-          <form action="" className="space-x-2 flex flex-wrap flex-center">
+          <form
+            action=""
+            className="space-x-2 flex flex-wrap flex-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <label htmlFor="items-number" className="max-md:text-sm">
               Show
             </label>
@@ -53,12 +84,25 @@ const ShopProducts = ({ data }: { data: product[] }) => {
               placeholder="16"
               className="w-9 h-8"
               min={4}
+              value={itemsPerPage}
+              // onChange={(e) => {
+              //   e.preventDefault();
+              //   setItemsPerPage(e.target.value);
+              // }}
+              onChange={(e) => handleShowAmount}
             />
           </form>
-          <select name="" id="" className="max-md:text-xs">
-            <option value="">Default</option>
-            <option value="">Ascending</option>
-            <option value="">Descending</option>
+          <select
+            name=""
+            id=""
+            onChange={(e) => {
+              setSortBy(e.target.value);
+            }}
+            className="max-md:text-xs"
+          >
+            <option value="Default">Default</option>
+            <option value="Ascending">Ascending</option>
+            <option value="Descending">Descending</option>
           </select>
         </div>
       </div>
