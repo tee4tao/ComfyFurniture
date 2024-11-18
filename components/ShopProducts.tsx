@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiViewGrid } from "react-icons/hi";
 import { TbLayoutList } from "react-icons/tb";
 import { usePagination } from "@mantine/hooks";
@@ -8,11 +8,16 @@ import ProductCard from "@/components/ProductCard";
 import { Button } from "./ui/button";
 
 const ShopProducts = ({ data }: { data: product[] }) => {
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState<string | number>("");
 
   const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsDisplayed, setItemsDisplayed] = useState("");
 
   const [visibleData, setVisibleData] = useState(data.slice(0, itemsPerPage));
+
+  const originalData = useRef([...data]);
+
+  // const [unsortedData, setUnsortedData] = useState([...originalData]);
 
   const total = Math.ceil(data.length / itemsPerPage);
   const pagination = usePagination({
@@ -37,15 +42,15 @@ const ShopProducts = ({ data }: { data: product[] }) => {
       // pagination.setPage(1);
     }
     if (sortBy === "Default" || sortBy === "") {
-      setVisibleData(data.slice(0, itemsPerPage));
-      // pagination.setPage(1);
+      // data = [...originalData];
+      setVisibleData(originalData.current.slice(0, itemsPerPage));
     }
-  }, [data, itemsPerPage, sortBy]);
+  }, [data, itemsPerPage, originalData, sortBy]);
 
-  const handleShowAmount = (e: React.ChangeEventHandler<HTMLInputElement>) => {
-    e.preventDefault();
-    setItemsPerPage(e.target.value);
-  };
+  // const handleShowAmount = (e: React.ChangeEventHandler<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setItemsPerPage(e.target.value);
+  // };
 
   return (
     <section className="w-full flex flex-col flex-center">
@@ -84,12 +89,19 @@ const ShopProducts = ({ data }: { data: product[] }) => {
               placeholder="16"
               className="w-9 h-8"
               min={4}
-              value={itemsPerPage}
-              // onChange={(e) => {
-              //   e.preventDefault();
-              //   setItemsPerPage(e.target.value);
-              // }}
-              onChange={(e) => handleShowAmount}
+              value={itemsDisplayed}
+              onChange={(e) => {
+                if (e.target.value === "" || +e.target.value < 4) {
+                  setItemsPerPage(4);
+                  setItemsDisplayed(e.target.value);
+                } else if (+e.target.value > data.length) {
+                  setItemsPerPage(data.length);
+                  setItemsDisplayed(e.target.value);
+                } else {
+                  setItemsPerPage(+e.target.value);
+                  setItemsDisplayed(e.target.value);
+                }
+              }}
             />
           </form>
           <select
