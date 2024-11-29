@@ -10,7 +10,7 @@ const Navbar = () => {
         <Link href={"/"}>
           <div className="flex items-center">
             <Image
-              src={"./icons/logo.svg"}
+              src={"../icons/logo.svg"}
               alt="ComfyFurniture Logo"
               width={30}
               height={30}
@@ -39,7 +39,7 @@ const Navbar = () => {
         <div className="hidden max-md:block">
           <Link href={"/cart"} className="text-gray-600">
             <Image
-              src="./icons/ant-design_shopping-cart-outlined.svg"
+              src="../icons/ant-design_shopping-cart-outlined.svg"
               alt="cart"
               width={25}
               height={25}

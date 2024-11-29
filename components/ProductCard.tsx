@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import { CiShare2, CiHeart } from "react-icons/ci";
+import { CiShare2, CiHeart, CiRead } from "react-icons/ci";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
 const ProductCard = ({ product }: { product: product }) => {
+  const slug = product.slug.current;
+
   const [showOverlay, setShowOverlay] = useState(false);
   return (
     <div
@@ -24,7 +26,7 @@ const ProductCard = ({ product }: { product: product }) => {
           >
             <div className="absolute bg-black pointer-events-none opacity-50 h-full w-full" />
             <motion.div
-              className="  z-10 "
+              className="flex flex-col flex-center  z-10 "
               initial={{ y: 10 }}
               animate={{ y: 0 }}
               exit={{ y: 10 }}
@@ -32,7 +34,10 @@ const ProductCard = ({ product }: { product: product }) => {
               <Button className="text-primary bg-white hover:text-white w-32 mb-4">
                 Add to cart
               </Button>
-              <div className="text-white flex items-center gap-3">
+              <div className="text-white flex flex-wrap flex-center gap-3">
+                <Link href={`/shop/${slug}`} className="flex items-center">
+                  <CiRead /> <span>View</span>
+                </Link>
                 <Link href={"/"} className="flex items-center">
                   <CiShare2 /> <span>Share</span>
                 </Link>

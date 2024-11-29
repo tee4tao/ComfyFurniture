@@ -19,15 +19,15 @@ export const pageLinks = [
 
 export const iconLinks = [
   {
-    icon: "./icons/mdi_account-alert-outline.svg",
+    icon: "../icons/mdi_account-alert-outline.svg",
     url: "/user",
   },
   {
-    icon: "./icons/akar-icons_heart.svg",
+    icon: "../icons/akar-icons_heart.svg",
     url: "/saved-items",
   },
   {
-    icon: "./icons/ant-design_shopping-cart-outlined.svg",
+    icon: "../icons/ant-design_shopping-cart-outlined.svg",
     url: "/cart",
   },
 ];
@@ -78,7 +78,7 @@ export const footer = [
   {
     id: 1,
     title: "ComfyFurniture",
-    img: "./icons/logo.svg",
+    img: "../icons/logo.svg",
     address: "University of Ibadan, Ibadan, Oyo State, Nigeria.",
   },
   {

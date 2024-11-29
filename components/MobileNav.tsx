@@ -26,7 +26,7 @@ const MobileNav = () => {
           <Link href={"/"}>
             <SheetClose className="flex items-center">
               <Image
-                src={"./icons/logo.svg"}
+                src={"../icons/logo.svg"}
                 alt="ComfyFurniture Logo"
                 width={30}
                 height={30}

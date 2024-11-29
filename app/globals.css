@@ -58,6 +58,10 @@
   body {
     @apply bg-background text-foreground;
   }
+  img {
+    width: auto;
+    height: auto;
+  } /* to fix the warning in the console about image has either width or height modified, but not the other. */
 }
 .scroller {
   -webkit-mask: linear-gradient(

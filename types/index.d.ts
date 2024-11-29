@@ -1,7 +1,7 @@
 declare interface product {
   name: string;
   _id: string;
-  slug: string;
+  slug: { current: string; _type: string };
   price: number;
   details: string;
   imageUrl: string;
