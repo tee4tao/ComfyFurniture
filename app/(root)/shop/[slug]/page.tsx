@@ -1,5 +1,13 @@
 import ProductDetails from "@/components/ProductDetails";
 import { client } from "@/lib/sanity";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 async function getData() {
   // await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -32,7 +40,30 @@ const page = async ({ params: { slug } }: Props) => {
   }
 
   return (
-    <div className="w-full flex flex-col flex-center mb-8">
+    <div className="w-screen flex flex-col flex-center mb-8">
+      <div className="w-full flex justify-center bg-secondary py-4 mb-8">
+        <Breadcrumb className="pl-4 container">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="font-semibold capitalize">
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/shop" className="text-gray-600 capitalize">
+                shop
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-gray-600 capitalize">
+                {slug}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       <ProductDetails data={data} slug={slug} />
     </div>
   );
