@@ -1,38 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { FaFacebook, FaLinkedin, FaSquareXTwitter } from "react-icons/fa6";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaSquareXTwitter,
+  FaStar,
+} from "react-icons/fa6";
 import Link from "next/link";
-import ProductCard from "./ProductCard";
+import RelatedProducts from "./RelatedProducts";
+import AdditionalProductInfo from "./AdditionalProductInfo";
 
 const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const [description, setDescription] = useState(true);
-  const [additionalInfo, setAdditionalInfo] = useState(false);
-  const [reviews, setReviews] = useState(false);
+
   const [newData, setNewData] = useState<product[]>(
     data.filter((product) => {
       return product.slug.current !== slug;
     })
   );
+
+  const color = {
+    orange: "#F2C265",
+    grey: "a9a9a9",
+  };
+  const stars = Array(5).fill(0);
   const sizes = ["L", "XL", "XS"];
   const colors = [
     { name: "Purple", value: "bg-purple-500" },
     { name: "Black", value: "bg-black" },
     { name: "Gold", value: "bg-yellow-600" },
   ];
-  // useEffect(() => {
-  //   setNewData(
-  //     data.filter((product) => {
-  //       return product.slug.current !== slug;
-  //     })
-  //   );
-  //   // console.log(newData);
-  // }, [data, slug]);
   if (!data) {
     return <div>loading.</div>;
   }
@@ -60,6 +62,22 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
                     {name}
                   </h1>
                   <p className="text-gray-600 font-bold text-lg ">#{price}</p>
+                  <div className="flex gap-2">
+                    {stars.map((_, index) => {
+                      return (
+                        <div key={index}>
+                          <FaStar
+                            size={18}
+                            color={4 > index ? color.orange : color.grey}
+                          />
+                        </div>
+                      );
+                    })}
+                    <div className="border-r border-r-gray-300" />
+                    <div className="text-gray-300 text-sm">
+                      5 Customers Review
+                    </div>
+                  </div>
                   <p className="text-sm">
                     Setting the bar as one of the loudest speakers in its class,
                     the Kilburn is a compact, stout-hearted hero with a
@@ -192,92 +210,10 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
         }
       })}
       {/* description, additional information & reviews */}
-      <article className="w-full flex flex-col items-center  border-t border-t-gray-300 mt-8 p-2 pt-8 md:p-6 ">
-        <div className="container flex flex-col flex-center">
-          <div className="flex space-x-20 text-gray-300 mb-4 max-sm:space-x-10">
-            <button
-              onClick={() => {
-                setDescription(true);
-                setAdditionalInfo(false);
-                setReviews(false);
-              }}
-              className={`${description === true && "text-black font-bold"}`}
-            >
-              Description
-            </button>
-            <button
-              onClick={() => {
-                setAdditionalInfo(true);
-                setDescription(false);
-                setReviews(false);
-              }}
-              className={`${additionalInfo === true && "text-black font-bold"}`}
-            >
-              Additional Information
-            </button>
-            <button
-              onClick={() => {
-                setReviews(true);
-                setAdditionalInfo(false);
-                setDescription(false);
-              }}
-              className={`${reviews === true && "text-black font-bold"}`}
-            >
-              Review[5]
-            </button>
-          </div>
-          {description && (
-            <div className="text-gray-300 flex flex-col flex-center">
-              <div className="mb-4">
-                <p className="mb-2">
-                  Embodying the raw, wayward spirit of rock ‘n’ roll, the
-                  Kilburn portable active stereo speaker takes the unmistakable
-                  look and sound of Marshall, unplugs the chords, and takes the
-                  show on the road.
-                </p>
-                <p>
-                  Weighing in under 7 pounds, the Kilburn is a lightweight piece
-                  of vintage styled engineering. Setting the bar as one of the
-                  loudest speakers in its class, the Kilburn is a compact,
-                  stout-hearted hero with a well-balanced audio which boasts a
-                  clear midrange and extended highs for a sound that is both
-                  articulate and pronounced. The analogue knobs allow you to
-                  fine tune the controls to your personal preferences while the
-                  guitar-influenced leather strap enables easy and stylish
-                  travel.
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Image
-                  src={"/images/Group 107.png"}
-                  alt="Product description image"
-                  width={300}
-                  height={250}
-                  className="w-40 md:w-60 lg:w-96"
-                />
-                <Image
-                  src={"/images/Group 107.png"}
-                  alt="Product description image"
-                  width={300}
-                  height={250}
-                  className="w-40 md:w-60 lg:w-96"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </article>
+      <AdditionalProductInfo stars={stars} color={color} />
+
       {/* related products */}
-      <article className="w-full flex flex-col items-center  border-t border-t-gray-300 mt-8 p-2 pt-8 md:p-6 ">
-        <div className="container flex flex-col flex-center">
-          <h2 className="text-xl font-semibold">Related Products</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 space-x-1">
-            {newData.slice(0, 4).map((product) => {
-              return <ProductCard product={product} key={product._id} />;
-            })}
-          </div>
-        </div>
-      </article>
+      <RelatedProducts newData={newData} />
     </section>
   );
 };
