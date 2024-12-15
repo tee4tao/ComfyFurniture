@@ -17,6 +17,7 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [showCartItems, setShowCartItems] = useState(true);
 
   const [newData, setNewData] = useState<product[]>(
     data.filter((product) => {
@@ -40,6 +41,128 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
   }
   return (
     <section className="w-full overflow-hidden flex flex-col flex-center">
+      {showCartItems && (
+        <div className="fixed right-0 top-0 h-screen w-[15rem] md:w-[25rem] z-50 bg-white p-2 md:px-4">
+          {/* header */}
+          <div className="flex justify-between items-center border-b border-b-gray-300 mb-4 pb-4">
+            <h2 className="capitalize font-bold text-2xl">shopping cart</h2>
+            <button>
+              <Image
+                src={"../icons/Group.svg"}
+                alt="close button"
+                width={10}
+                height={10}
+                className=""
+              />
+            </button>
+          </div>
+          {/* cart items */}
+          <div className="flex items-center justify-between mb-4">
+            <Image
+              src={"/images/Rectangle 38.png"}
+              alt=""
+              width={80}
+              height={80}
+              objectFit="cover"
+              className="rounded-md max-sm:w-20"
+            />
+            <div className="space-y-2">
+              <p className="text-lg">Asgaard sofa</p>
+              <p className="flec items-center space-x-4 max-sm:space-x-1">
+                <span>1</span> <span>x</span>{" "}
+                <span className="text-primary text-sm font-semibold">
+                  #20,000.00
+                </span>
+              </p>
+            </div>
+            <Image
+              src={"../icons/Vector.svg"}
+              alt="close button"
+              width={10}
+              height={10}
+              className=""
+            />
+          </div>
+          <div className="flex items-center justify-between mb-4">
+            <Image
+              src={"/images/Rectangle 38.png"}
+              alt=""
+              width={80}
+              height={80}
+              objectFit="cover"
+              className="rounded-md max-sm:w-20"
+            />
+            <div className="space-y-2">
+              <p className="text-lg">Asgaard sofa</p>
+              <p className="flec items-center space-x-4 max-sm:space-x-1">
+                <span>1</span> <span>x</span>{" "}
+                <span className="text-primary text-sm font-semibold">
+                  #20,000.00
+                </span>
+              </p>
+            </div>
+            <Image
+              src={"../icons/Vector.svg"}
+              alt="close button"
+              width={10}
+              height={10}
+              className=""
+            />
+          </div>
+          <div className="flex items-center justify-between mb-4">
+            <Image
+              src={"/images/Rectangle 38.png"}
+              alt=""
+              width={80}
+              height={80}
+              objectFit="cover"
+              className="rounded-md max-sm:w-20"
+            />
+            <div className="space-y-2">
+              <p className="text-lg">Asgaard sofa</p>
+              <p className="flec items-center space-x-4 max-sm:space-x-1">
+                <span>1</span> <span>x</span>{" "}
+                <span className="text-primary text-sm font-semibold">
+                  #20,000.00
+                </span>
+              </p>
+            </div>
+            <Image
+              src={"../icons/Vector.svg"}
+              alt="close button"
+              width={10}
+              height={10}
+              className=""
+            />
+          </div>
+          <div className="flex items-center justify-between mb-4">
+            <Image
+              src={"/images/Rectangle 38.png"}
+              alt=""
+              width={80}
+              height={80}
+              objectFit="cover"
+              className="rounded-md max-sm:w-20"
+            />
+            <div className="space-y-2">
+              <p className="text-lg">Asgaard sofa</p>
+              <p className="flec items-center space-x-4 max-sm:space-x-1">
+                <span>1</span> <span>x</span>{" "}
+                <span className="text-primary text-sm font-semibold">
+                  #20,000.00
+                </span>
+              </p>
+            </div>
+            <Image
+              src={"../icons/Vector.svg"}
+              alt="close button"
+              width={10}
+              height={10}
+              className=""
+            />
+          </div>
+        </div>
+      )}
       {data.map((product: product, index: number) => {
         if (product.slug.current === slug) {
           const { name, details, imageUrl, price } = product;
@@ -49,6 +172,9 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
               className="flex items-start justify-around space-x-12 w-4/5 px-2 max-sm:flex-col max-sm:items-center space-y-4  container "
               key={index}
             >
+              {showCartItems && (
+                <div className="fixed inset-0 z-10 bg-black/40  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+              )}
               <Image
                 src={imageUrl}
                 alt={name}
@@ -150,7 +276,10 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
                       />
                     </div>
                     {/* add to cart button */}
-                    <button className="border border-gray-300 rounded px-2 py-1 text-nowrap capitalize hover:text-primary">
+                    <button
+                      className="border border-gray-300 rounded px-2 py-1 text-nowrap capitalize hover:text-primary"
+                      onClick={() => setShowCartItems(true)}
+                    >
                       add to cart
                     </button>
                     {/* compare button */}

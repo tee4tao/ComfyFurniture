@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import {
   Breadcrumb,
@@ -7,8 +8,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { usePathname } from "next/navigation";
 
-const ShopBanner = () => {
+const PageBanner = () => {
+  const path = usePathname();
+
   return (
     <section className="w-full">
       <div className="relative w-full flex justify-center items-center">
@@ -20,7 +24,17 @@ const ShopBanner = () => {
           className="w-screen object-cover"
         />
         <div className="absolute text-center">
-          <h2 className="text-2xl font-semibold mb-1 lg:text-4xl">Shop</h2>
+          {/* logo */}
+          <Image
+            src={"../icons/logo.svg"}
+            alt="ComfyFurniture Logo"
+            width={10}
+            height={10}
+            className="inline-block w-6"
+          />
+          <h2 className="text-2xl font-semibold lg:text-4xl capitalize">
+            {path.slice(1)}
+          </h2>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -30,7 +44,9 @@ const ShopBanner = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-gray-600">shop</BreadcrumbPage>
+                <BreadcrumbPage className="text-gray-600 capitalize">
+                  {path.slice(1)}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -40,4 +56,4 @@ const ShopBanner = () => {
   );
 };
 
-export default ShopBanner;
+export default PageBanner;

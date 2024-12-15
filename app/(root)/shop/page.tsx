@@ -1,4 +1,4 @@
-import ShopBanner from "@/components/ShopBanner";
+import PageBanner from "@/components/PageBanner";
 import ShopProducts from "@/components/ShopProducts";
 
 import { client } from "@/lib/sanity";
@@ -21,7 +21,7 @@ const Shop = async () => {
   const data: product[] = await getData();
   return (
     <div className="w-full flex flex-col flex-center">
-      <ShopBanner />
+      <PageBanner />
       <ShopProducts data={data} />
     </div>
   );
