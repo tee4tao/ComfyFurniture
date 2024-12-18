@@ -20,6 +20,7 @@ const ProductCard = ({ product }: { product: product }) => {
         alt={product.name}
         width={200}
         height={200}
+        priority={true}
         className="object-cover w-full rounded-t-lg"
       />
       <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-40">

@@ -16,6 +16,7 @@ const Setup = () => {
             alt="setup images"
             width={200}
             height={200}
+            priority={true}
             className="object-cover w-full"
           />
         ))}

@@ -1,9 +1,12 @@
+"use client";
 import { iconLinks, pageLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
+import { useCart } from "@/context/CartProvider";
 
 const Navbar = () => {
+  const { countAllItems } = useCart();
   return (
     <nav className="bg-white shadow-2xl w-full p-2 md:p-6 flex justify-center">
       <div className="container flex items-center justify-between">
@@ -28,8 +31,17 @@ const Navbar = () => {
         </div>
         <div className="flex space-x-4 max-md:hidden">
           {iconLinks.map((link, index) => (
-            <Link key={index} href={link.url} className="text-gray-600">
+            <Link
+              key={index}
+              href={link.url}
+              className="text-gray-600 relative"
+            >
               <Image src={link.icon} alt={link.url} width={20} height={20} />
+              {link.url === "/cart" && (
+                <div className="bg-primary text-white rounded-full p-[0.1rem] px-2 text-sm absolute -top-2 -right-4">
+                  {countAllItems() > 9 ? `9+` : countAllItems()}
+                </div>
+              )}
             </Link>
           ))}
         </div>
@@ -37,18 +49,21 @@ const Navbar = () => {
 
         {/* cart */}
         <div className="hidden max-md:block">
-          <Link href={"/cart"} className="text-gray-600">
+          <Link href={"/cart"} className="text-gray-600 relative">
             <Image
               src="../icons/ant-design_shopping-cart-outlined.svg"
               alt="cart"
               width={25}
               height={25}
             />
+            <div className="bg-primary text-white rounded-full p-[0.1rem] px-2 text-sm absolute -top-2 -right-4">
+              {countAllItems() > 9 ? `9+` : countAllItems()}
+            </div>
           </Link>
         </div>
         {/* Hamburger */}
         <div className="hidden max-md:block">
-          <MobileNav />
+          <MobileNav countAllItems={countAllItems()} />
         </div>
       </div>
     </nav>

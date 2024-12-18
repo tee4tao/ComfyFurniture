@@ -21,6 +21,7 @@ const PageBanner = () => {
           alt="shop-banner"
           width={1000}
           height={100}
+          priority={true}
           className="w-screen object-cover"
         />
         <div className="absolute text-center">

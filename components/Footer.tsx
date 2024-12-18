@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="relative z-50 py-10 w-full text-[12px] bg-white">
+      <div className="relative py-10 w-full text-[12px] bg-white">
         <h1 className="  m-auto  w-[50%]  text-center">
           © All Rights Reserved. {year}, ComfyFurniture.
         </h1>

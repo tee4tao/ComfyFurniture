@@ -13,7 +13,7 @@ import Image from "next/image";
 
 import { iconLinks, pageLinks } from "@/constants";
 
-const MobileNav = () => {
+const MobileNav = ({ countAllItems }: { countAllItems: number }) => {
   const pathname = usePathname();
   return (
     <Sheet>
@@ -61,7 +61,7 @@ const MobileNav = () => {
                 href={link.url}
                 className="text-gray-600 hover:text-primary transition-all"
               >
-                <SheetClose>
+                <SheetClose className="relative">
                   <Image
                     src={link.icon}
                     alt={link.url}
@@ -69,6 +69,11 @@ const MobileNav = () => {
                     height={25}
                     className="hover:text-primary"
                   />
+                  {link.url === "/cart" && (
+                    <div className="bg-primary text-white rounded-full p-[0.1rem] px-2 text-sm absolute -top-2 -right-4">
+                      {countAllItems > 9 ? `9+` : countAllItems}
+                    </div>
+                  )}
                 </SheetClose>
               </Link>
             ))}

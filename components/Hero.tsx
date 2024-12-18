@@ -13,6 +13,7 @@ const Hero = () => {
           alt="hero image"
           width={1000}
           height={1000}
+          priority={true}
           className="w-screen min-[1672px]:h-[90vh]"
         />
         <div className="bg-bannerBg w-52 sm:w-96 xl:w-[28rem] absolute top-2 sm:top-12 right-2 xl:top-64 xl:right-60 pb-1 max-sm:px-3 sm:p-4 sm:space-y-4 rounded-md">

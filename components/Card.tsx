@@ -38,6 +38,7 @@ const Card = ({ image }: { image: string }) => {
         alt="setup images"
         width={200}
         height={200}
+        priority={true}
         className="object-cover w-full h-full"
         // max-[669px]:h-[10rem]
       />

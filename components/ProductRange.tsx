@@ -19,6 +19,7 @@ const ProductRange = () => {
               alt={item.title}
               width={200}
               height={300}
+              priority={true}
               className="object-cover md:w-96"
             />
             <p>{item.title}</p>
