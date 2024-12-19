@@ -1,17 +1,32 @@
 import { useCart } from "@/context/CartProvider";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface CartItemsOverlayProps {
   showCartItems: boolean;
   setShowCartItems: React.Dispatch<React.SetStateAction<boolean>>;
+  loggedIn: unknown;
 }
 
 const CartItemsOverlay = ({
   showCartItems,
   setShowCartItems,
+  loggedIn,
 }: CartItemsOverlayProps) => {
   const { items: cartItems, removeFromCart, countTotalPrice } = useCart();
+
+  const router = useRouter();
+
+  const onCheckOut = () => {
+    if (loggedIn) {
+      router.push("/checkout");
+    } else {
+      router.push("/sign-in");
+    }
+  };
+
+  console.log(loggedIn);
 
   return (
     <div>
@@ -102,7 +117,10 @@ const CartItemsOverlay = ({
             <button className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6">
               Cart
             </button>
-            <button className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6">
+            <button
+              className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6"
+              onClick={onCheckOut}
+            >
               Checkout
             </button>
             <button className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6">

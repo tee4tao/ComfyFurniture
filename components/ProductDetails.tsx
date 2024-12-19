@@ -15,7 +15,15 @@ import AdditionalProductInfo from "./AdditionalProductInfo";
 import CartItemsOverlay from "./CartItemsOverlay";
 import AddToCart from "./AddToCart";
 
-const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
+const ProductDetails = ({
+  data,
+  slug,
+  loggedIn,
+}: {
+  data: product[];
+  slug: string;
+  loggedIn: unknown;
+}) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -47,6 +55,7 @@ const ProductDetails = ({ data, slug }: { data: product[]; slug: string }) => {
       <CartItemsOverlay
         showCartItems={showCartItems}
         setShowCartItems={setShowCartItems}
+        loggedIn={loggedIn}
       />
 
       {data.map((product: product, index: number) => {

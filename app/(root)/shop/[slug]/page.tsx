@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getLoggedInUser } from "@/lib/actions/users.action";
 
 async function getData() {
   // await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -32,6 +33,8 @@ type Props = {
 // console.log(getData());
 
 const page = async ({ params: { slug } }: Props) => {
+  const loggedIn = await getLoggedInUser();
+
   const data: product[] = await getData();
   // console.log(Boolean(data));
 
@@ -64,7 +67,7 @@ const page = async ({ params: { slug } }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <ProductDetails data={data} slug={slug} />
+      <ProductDetails data={data} slug={slug} loggedIn={loggedIn} />
     </div>
   );
 };
