@@ -51,3 +51,6 @@ export const authFormSchema = (type: string) =>
 
 export const parseStringify = (value: unknown) =>
   JSON.parse(JSON.stringify(value));
+
+export const convertToSubcurrency = (amount: number, factor = 100) =>
+  Math.round(amount * factor);
