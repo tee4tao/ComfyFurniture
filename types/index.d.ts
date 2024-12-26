@@ -15,3 +15,10 @@ declare interface signInProps {
   email: string;
   password: string;
 }
+declare interface createCartProps {
+  id: string;
+  name: string;
+  details: string;
+  quantity: number;
+  imageUrl: string;
+}

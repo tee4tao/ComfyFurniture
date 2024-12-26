@@ -5,6 +5,12 @@ import { createAdminClient, createSessionClient } from "../appwrite";
 import { ID } from "node-appwrite";
 import { parseStringify } from "../utils";
 
+const {
+  APPWRITE_DATABASE_ID: DATABASE_ID,
+  APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
+  APPWRITE_CART_COLLECTION_ID: CART_COLLECTION_ID,
+} = process.env;
+
 export const signIn = async ({ email, password }: signInProps) => {
   try {
     const { account } = await createAdminClient();
@@ -25,6 +31,7 @@ export const signUp = async (userData: SignUpParams) => {
       httpOnly: true,
       sameSite: "strict",
       secure: true,
+      expires: new Date(session.expire),
     });
     return parseStringify(newUserAccount);
   } catch (error) {
@@ -43,3 +50,47 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export const createCart = async ({
+  id,
+  name,
+  details,
+  quantity,
+  imageUrl,
+}: createCartProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const cart = await database.createDocument(
+      DATABASE_ID!,
+      CART_COLLECTION_ID!,
+      ID.unique(),
+      {
+        id,
+        name,
+        details,
+        quantity,
+        imageUrl,
+      }
+    );
+
+    return parseStringify(cart);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getCart = async () => {
+  try {
+    const { database } = await createAdminClient();
+
+    const cart = await database.listDocuments(
+      DATABASE_ID!,
+      CART_COLLECTION_ID!
+    );
+    // console.log(cart.documents);
+
+    return parseStringify(cart);
+  } catch (error) {
+    console.log(error);
+  }
+};

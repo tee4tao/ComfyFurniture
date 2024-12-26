@@ -1,17 +1,45 @@
 "use client";
 import { useCart } from "@/context/CartProvider";
-import React from "react";
+import { createCart } from "@/lib/actions/users.action";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const CheckoutInfo = () => {
+  const router = useRouter();
+  const [onlinePayment, setOnlinePayment] = useState(true);
+  const [cod, setCod] = useState(false);
+
+  const payOnline = () => {
+    setOnlinePayment(true);
+    setCod(false);
+  };
+  const payOnDelivery = () => {
+    setOnlinePayment(false);
+    setCod(true);
+  };
+
+  const checkOut = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (onlinePayment) {
+      router.push("/payment");
+    } else if (cod) {
+      alert("You have successfully placed an order for cash on delivery");
+    }
+  };
+
   // Todo: When user logs in, then the cart items should from the user's data and not from the LS again
 
   const { items: cartItems, countTotalPrice } = useCart();
   return (
     <section className="w-full flex justify-center">
-      <div className="container flex flex-col md:flex-row flex-center md:items-start gap-6 md:justify-around mt-6 px-4">
+      <form
+        action=""
+        onSubmit={checkOut}
+        className="container flex flex-col md:flex-row flex-center md:items-start gap-6 md:justify-around mt-6 px-4"
+      >
         <article className="w-full">
           <h2 className="text-2xl mb-6 font-bold">Billing Details</h2>
-          <form action="" className="space-y-4 w-full md:w-[28rem]">
+          <div className="space-y-4 w-full md:w-[28rem]">
             <div className="md:flex gap-2 w-full">
               <div className="flex flex-col gap-2 w-full">
                 <label htmlFor="first-name" className="font-semibold">
@@ -19,6 +47,7 @@ const CheckoutInfo = () => {
                 </label>
                 <input
                   type="text"
+                  required
                   id="first-name"
                   className="border border-gray-300 rounded-md h-10"
                 />
@@ -29,6 +58,7 @@ const CheckoutInfo = () => {
                 </label>
                 <input
                   type="text"
+                  required
                   id="last-name"
                   className="border border-gray-300 rounded-md h-10 focus:border-primary"
                 />
@@ -48,6 +78,7 @@ const CheckoutInfo = () => {
               <label htmlFor="country">Country</label>
               <input
                 type="text"
+                required
                 id="country"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -56,6 +87,7 @@ const CheckoutInfo = () => {
               <label htmlFor="street-name">Street Address</label>
               <input
                 type="text"
+                required
                 id="street-name"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -64,6 +96,7 @@ const CheckoutInfo = () => {
               <label htmlFor="town">Town / City</label>
               <input
                 type="text"
+                required
                 id="town"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -72,6 +105,7 @@ const CheckoutInfo = () => {
               <label htmlFor="zip-code">Zip Code</label>
               <input
                 type="number"
+                required
                 id="zip-code"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -79,7 +113,8 @@ const CheckoutInfo = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="phone">Phone</label>
               <input
-                type="number"
+                type="tel"
+                required
                 id="phone"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -88,6 +123,7 @@ const CheckoutInfo = () => {
               <label htmlFor="email">Email Address</label>
               <input
                 type="email"
+                required
                 id="email"
                 className="border border-gray-300 rounded-md h-10"
               />
@@ -98,7 +134,7 @@ const CheckoutInfo = () => {
               placeholder="Additional Information"
               className="border border-gray-300 rounded-md w-full"
             ></textarea>
-          </form>
+          </div>
         </article>
 
         <article className="space-y-4">
@@ -145,6 +181,7 @@ const CheckoutInfo = () => {
                   value="direct-bank"
                   className="h-4 w-4"
                   defaultChecked
+                  onClick={payOnline}
                 />
                 <span className="text-sm font-medium">
                   Direct Bank Transfer
@@ -162,6 +199,7 @@ const CheckoutInfo = () => {
                   name="payment-method"
                   value="cod"
                   className="h-4 w-4"
+                  onClick={payOnDelivery}
                 />
                 <span className="text-sm font-medium">Cash on Delivery</span>
               </label>
@@ -179,12 +217,15 @@ const CheckoutInfo = () => {
             </p>
 
             {/* Place Order Button */}
-            <button className="mt-6 self-center border w-32 py-3 rounded-md hover:bg-primary transition hover:border-0">
+            <button
+              type="submit"
+              className="mt-6 self-center border w-32 py-3 rounded-md hover:bg-primary transition hover:border-0"
+            >
               Place order
             </button>
           </div>
         </article>
-      </div>
+      </form>
     </section>
   );
 };

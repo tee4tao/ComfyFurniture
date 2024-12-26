@@ -114,7 +114,10 @@ const CartItemsOverlay = ({
           </div>
           {/* buttons */}
           <div className="flex items-center justify-between gap-1 max-sm:text-sm mb-4">
-            <button className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6">
+            <button
+              className="border rounded-full hover:text-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-1 px-6"
+              onClick={() => router.push("/cart")}
+            >
               Cart
             </button>
             <button

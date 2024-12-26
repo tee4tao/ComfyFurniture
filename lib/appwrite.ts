@@ -31,7 +31,7 @@ export async function createAdminClient() {
     get account() {
       return new Account(client);
     },
-    get Database() {
+    get database() {
       return new Databases(client);
     },
     get User() {

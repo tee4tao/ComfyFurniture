@@ -1,16 +1,17 @@
 import CartItems from "@/components/CartItems";
 import PageBanner from "@/components/PageBanner";
-import { getLoggedInUser } from "@/lib/actions/users.action";
+import { getCart, getLoggedInUser } from "@/lib/actions/users.action";
 import React from "react";
 
 const cart = async () => {
   const loggedIn = await getLoggedInUser();
-  console.log(loggedIn);
+  const DBCartItems = await getCart();
+  // console.log(cartItems);
 
   return (
     <div className="w-full flex flex-col flex-center">
       <PageBanner />
-      <CartItems loggedIn={loggedIn} />
+      <CartItems loggedIn={loggedIn} DBCartItems={DBCartItems} />
     </div>
   );
 };

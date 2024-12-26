@@ -12,16 +12,34 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 import { FiTrash } from "react-icons/fi";
+import { createCart } from "@/lib/actions/users.action";
 
-const CartItems = ({ loggedIn }: { loggedIn: unknown }) => {
+const CartItems = ({
+  loggedIn,
+  DBCartItems,
+}: {
+  loggedIn: unknown;
+  DBCartItems: unknown;
+}) => {
   const { items: cartItems, removeFromCart, countTotalPrice } = useCart();
+  console.log(DBCartItems);
 
   const router = useRouter();
   console.log(loggedIn);
 
-  const onCheckOut = () => {
+  const onCheckOut = async () => {
     if (loggedIn) {
       router.push("/checkout");
+      cartItems.map(async (cartItem) => {
+        await createCart({
+          ...cartItem,
+          id: cartItem.product._id,
+          name: cartItem.product.name,
+          details: cartItem.product.details,
+          quantity: cartItem.count,
+          imageUrl: cartItem.product.imageUrl,
+        });
+      });
     } else {
       router.push("/sign-in");
     }

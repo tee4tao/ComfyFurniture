@@ -17,10 +17,12 @@ const page = () => {
   const { countTotalPrice } = useCart();
   const amount = countTotalPrice();
   return (
-    <section className="container mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-secondary to-primary">
+    <section className="container mx-auto p-10 max-sm:mt-0 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-secondary to-primary">
       <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">Make Payment</h1>
-        <h2 className="text-2xl">
+        <h1 className="text-4xl max-sm:text-2xl font-extrabold mb-2">
+          Make Payment
+        </h1>
+        <h2 className="text-2xl max-sm:text-xl">
           You are paying
           <span className="font-bold"> ${amount} </span>
           to ComfyFurniture
