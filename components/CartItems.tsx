@@ -12,14 +12,23 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 import { FiTrash } from "react-icons/fi";
-import { createCart } from "@/lib/actions/users.action";
+import { createCart, updatCartItem } from "@/lib/actions/users.action";
 
 const CartItems = ({
   loggedIn,
   DBCartItems,
 }: {
-  loggedIn: unknown;
-  DBCartItems: unknown;
+  loggedIn: boolean;
+  DBCartItems: {
+    documents: {
+      id: string;
+      name: string;
+      details: string;
+      quantity: number;
+      imageUrl: string;
+      $id: string;
+    }[];
+  };
 }) => {
   const { items: cartItems, removeFromCart, countTotalPrice } = useCart();
   console.log(DBCartItems);
@@ -30,16 +39,55 @@ const CartItems = ({
   const onCheckOut = async () => {
     if (loggedIn) {
       router.push("/checkout");
-      cartItems.map(async (cartItem) => {
-        await createCart({
-          ...cartItem,
-          id: cartItem.product._id,
-          name: cartItem.product.name,
-          details: cartItem.product.details,
-          quantity: cartItem.count,
-          imageUrl: cartItem.product.imageUrl,
-        });
-      });
+      // cartItems.map(async (cartItem) => {
+      //   await createCart({
+      //     ...cartItem,
+      //     id: cartItem.product._id,
+      //     name: cartItem.product.name,
+      //     details: cartItem.product.details,
+      //     quantity: cartItem.count,
+      //     imageUrl: cartItem.product.imageUrl,
+      //   });
+      // });
+      await Promise.all(
+        cartItems.map(async (cartItem) => {
+          const existingItem = DBCartItems.documents.find(
+            (dbItem: any) => dbItem.id === cartItem.product._id
+          );
+
+          if (existingItem) {
+            // Check if there are differences
+            const hasDifferences =
+              existingItem.name !== cartItem.product.name ||
+              existingItem.details !== cartItem.product.details ||
+              existingItem.quantity !== cartItem.count ||
+              existingItem.imageUrl !== cartItem.product.imageUrl;
+            console.log(hasDifferences);
+            console.log(existingItem.$id);
+
+            if (hasDifferences) {
+              // Update the existing item
+              await updatCartItem({
+                ...existingItem,
+                itemId: existingItem.$id,
+                name: cartItem.product.name,
+                details: cartItem.product.details,
+                quantity: cartItem.count,
+                imageUrl: cartItem.product.imageUrl,
+              });
+            }
+          } else {
+            // Add a new item if it does not exist
+            await createCart({
+              id: cartItem.product._id,
+              name: cartItem.product.name,
+              details: cartItem.product.details,
+              quantity: cartItem.count,
+              imageUrl: cartItem.product.imageUrl,
+            });
+          }
+        })
+      );
     } else {
       router.push("/sign-in");
     }

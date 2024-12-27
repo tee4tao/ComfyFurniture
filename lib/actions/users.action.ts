@@ -94,3 +94,43 @@ export const getCart = async () => {
     console.log(error);
   }
 };
+export const updatCartItem = async ({
+  itemId,
+  id,
+  name,
+  details,
+  quantity,
+  imageUrl,
+}: createCartProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const cart = await database.updateDocument(
+      DATABASE_ID!,
+      CART_COLLECTION_ID!,
+      itemId!,
+      {
+        // itemId,
+        id,
+        name,
+        details,
+        quantity,
+        imageUrl,
+      }
+    );
+    // console.log(cart.documents);
+
+    return parseStringify(cart);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deleteCartItem = async (itemId: string) => {
+  try {
+    const { database } = await createAdminClient();
+
+    await database.deleteDocument(DATABASE_ID!, CART_COLLECTION_ID!, itemId!);
+  } catch (error) {
+    console.log(error);
+  }
+};

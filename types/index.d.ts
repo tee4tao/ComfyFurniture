@@ -21,4 +21,5 @@ declare interface createCartProps {
   details: string;
   quantity: number;
   imageUrl: string;
+  itemId?: string;
 }
