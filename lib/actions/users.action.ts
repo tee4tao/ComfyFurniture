@@ -57,6 +57,7 @@ export const createCart = async ({
   details,
   quantity,
   imageUrl,
+  price,
 }: createCartProps) => {
   try {
     const { database } = await createAdminClient();
@@ -71,6 +72,7 @@ export const createCart = async ({
         details,
         quantity,
         imageUrl,
+        price,
       }
     );
 
@@ -101,6 +103,7 @@ export const updatCartItem = async ({
   details,
   quantity,
   imageUrl,
+  price,
 }: createCartProps) => {
   try {
     const { database } = await createAdminClient();
@@ -116,6 +119,7 @@ export const updatCartItem = async ({
         details,
         quantity,
         imageUrl,
+        price,
       }
     );
     // console.log(cart.documents);

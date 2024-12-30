@@ -12,7 +12,11 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 import { FiTrash } from "react-icons/fi";
-import { createCart, updatCartItem } from "@/lib/actions/users.action";
+import {
+  createCart,
+  deleteCartItem,
+  updatCartItem,
+} from "@/lib/actions/users.action";
 
 const CartItems = ({
   loggedIn,
@@ -26,6 +30,7 @@ const CartItems = ({
       details: string;
       quantity: number;
       imageUrl: string;
+      price: number;
       $id: string;
     }[];
   };
@@ -34,7 +39,7 @@ const CartItems = ({
   console.log(DBCartItems);
 
   const router = useRouter();
-  console.log(loggedIn);
+  // console.log(loggedIn);
 
   const onCheckOut = async () => {
     if (loggedIn) {
@@ -62,8 +67,8 @@ const CartItems = ({
               existingItem.details !== cartItem.product.details ||
               existingItem.quantity !== cartItem.count ||
               existingItem.imageUrl !== cartItem.product.imageUrl;
-            console.log(hasDifferences);
-            console.log(existingItem.$id);
+            // console.log(hasDifferences);
+            // console.log(existingItem.$id);
 
             if (hasDifferences) {
               // Update the existing item
@@ -74,6 +79,7 @@ const CartItems = ({
                 details: cartItem.product.details,
                 quantity: cartItem.count,
                 imageUrl: cartItem.product.imageUrl,
+                price: cartItem.product.price,
               });
             }
           } else {
@@ -84,6 +90,7 @@ const CartItems = ({
               details: cartItem.product.details,
               quantity: cartItem.count,
               imageUrl: cartItem.product.imageUrl,
+              price: cartItem.product.price,
             });
           }
         })
@@ -120,24 +127,24 @@ const CartItems = ({
                   />
                   <p className="md:text-lg">{cartItem.product.name}</p>
                 </TableCell>
-                <TableCell className="">
-                  #{cartItem.product.price.toFixed(2)}
-                </TableCell>
+                <TableCell className="">#{cartItem.product.price}</TableCell>
                 <TableCell>{cartItem.count}</TableCell>
                 <TableCell className="text-right">
                   #{(cartItem.count * cartItem.product.price).toFixed(2)}
                 </TableCell>
                 <TableCell className="text-right ">
                   {/* 2222 */}
-                  <button onClick={() => removeFromCart(cartItem.product)}>
+                  <button
+                    onClick={async () => {
+                      deleteCartItem(
+                        DBCartItems.documents.find(
+                          (dbItem: any) => dbItem.id === cartItem.product._id
+                        )!.$id
+                      );
+                      removeFromCart(cartItem.product);
+                    }}
+                  >
                     <FiTrash className="text-primary" />
-                    {/* <Image
-                      src={"../icons/Vector.svg"}
-                      alt="remove item button"
-                      width={10}
-                      height={10}
-                      className=""
-                    /> */}
                   </button>
                 </TableCell>
               </TableRow>
