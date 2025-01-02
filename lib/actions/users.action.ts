@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
-import { ID } from "node-appwrite";
+import { ID, Permission, Query, Role } from "node-appwrite";
 import { parseStringify } from "../utils";
 
 const {
@@ -58,6 +58,7 @@ export const createCart = async ({
   quantity,
   imageUrl,
   price,
+  user_id,
 }: createCartProps) => {
   try {
     const { database } = await createAdminClient();
@@ -73,7 +74,14 @@ export const createCart = async ({
         quantity,
         imageUrl,
         price,
-      }
+        user_id,
+      },
+      [
+        Permission.read(Role.user(user_id!)),
+        Permission.update(Role.user(user_id!)),
+        Permission.delete(Role.user(user_id!)),
+        Permission.write(Role.user(user_id!)),
+      ]
     );
 
     return parseStringify(cart);
@@ -81,13 +89,14 @@ export const createCart = async ({
     console.log(error);
   }
 };
-export const getCart = async () => {
+export const getCart = async (user_id: string) => {
   try {
     const { database } = await createAdminClient();
 
     const cart = await database.listDocuments(
       DATABASE_ID!,
-      CART_COLLECTION_ID!
+      CART_COLLECTION_ID!,
+      [Query.equal("user_id", user_id)]
     );
     // console.log(cart.documents);
 

@@ -22,7 +22,7 @@ const CartItems = ({
   loggedIn,
   DBCartItems,
 }: {
-  loggedIn: boolean;
+  loggedIn: Record<string, string>;
   DBCartItems: {
     documents: {
       id: string;
@@ -36,7 +36,6 @@ const CartItems = ({
   };
 }) => {
   const { items: cartItems, removeFromCart, countTotalPrice } = useCart();
-  console.log(DBCartItems);
 
   const router = useRouter();
   // console.log(loggedIn);
@@ -75,6 +74,7 @@ const CartItems = ({
               await updatCartItem({
                 ...existingItem,
                 itemId: existingItem.$id,
+                user_id: loggedIn.$id,
                 name: cartItem.product.name,
                 details: cartItem.product.details,
                 quantity: cartItem.count,
@@ -91,6 +91,7 @@ const CartItems = ({
               quantity: cartItem.count,
               imageUrl: cartItem.product.imageUrl,
               price: cartItem.product.price,
+              user_id: loggedIn.$id,
             });
           }
         })

@@ -34,7 +34,7 @@ const loggedIn = async () => {
 // To update the cart in the local storage or database if user exists.
 const updateCartInLS = async (products: cartItem[]) => {
   const loggedIn = await getLoggedInUser();
-  const DBCartItems = await getCart();
+  const DBCartItems = await getCart(loggedIn?.$id);
   if (loggedIn) {
     products.map(async (cartItem) => {
       const existingItem = DBCartItems.documents.find(
@@ -72,6 +72,7 @@ const updateCartInLS = async (products: cartItem[]) => {
           quantity: cartItem.count,
           imageUrl: cartItem.product.imageUrl,
           price: cartItem.product.price,
+          user_id: loggedIn.$id,
         });
       }
     });
@@ -146,7 +147,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     const hasUser = async () => {
       const user = await loggedIn();
       if (user) {
-        const DBCartItems = await getCart();
+        const DBCartItems = await getCart(user.$id);
         setCartItems(
           DBCartItems.documents.map((item: any) => ({
             product: {

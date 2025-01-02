@@ -5,8 +5,7 @@ import React from "react";
 
 const cart = async () => {
   const loggedIn = await getLoggedInUser();
-  const DBCartItems = await getCart();
-  // console.log(cartItems);
+  const DBCartItems = await getCart(loggedIn?.$id);
 
   return (
     <div className="w-full flex flex-col flex-center">
