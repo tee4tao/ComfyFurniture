@@ -17,6 +17,7 @@ async function getData() {
   }`;
 
   const data = await client.fetch(query);
+
   return data;
 }
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -48,11 +49,19 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         });
         if (response) {
+          toast.success("Login successfull!!");
           router.push("/");
+        } else {
+          toast.error(
+            "Invalid credentials. Please check the email and password."
+          );
+          console.error(
+            "Invalid credentials. Please check the email and password."
+          ); // Log invalid credentials
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error("error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -60,6 +69,7 @@ const AuthForm = ({ type }: { type: string }) => {
   return (
     <section className="flex flex-col flex-center w-full min-h-screen p-4">
       <header className="w-full max-w-96">
+        <ToastContainer position="top-center" />
         <div className="flex items-center mb-8">
           <Image
             src={"./icons/logo.svg"}
