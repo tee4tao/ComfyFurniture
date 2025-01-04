@@ -23,7 +23,7 @@ const CheckoutInfo = () => {
     if (onlinePayment) {
       router.push("/payment");
     } else if (cod) {
-      alert("You have successfully placed an order for cash on delivery");
+      router.push("/pod");
     }
   };
 
