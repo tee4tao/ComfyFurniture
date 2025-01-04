@@ -39,6 +39,7 @@
     "react-toastify": "^11.0.2",
     "react-use-measure": "^2.1.1",
     "sanity": "^3.62.0",
+    "sharp": "^0.33.5",
     "stripe": "^17.5.0",
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.3",

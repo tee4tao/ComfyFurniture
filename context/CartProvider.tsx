@@ -135,12 +135,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((total, cartItem) => total + cartItem.count, 0);
   };
   const countTotalPrice = () => {
-    return cartItems
-      .reduce(
-        (total, cartItem) => total + cartItem.product.price * cartItem.count,
-        0
-      )
-      .toFixed(2);
+    return cartItems.reduce(
+      (total, cartItem) => total + cartItem.product.price * cartItem.count,
+      0
+    );
   };
 
   useEffect(() => {

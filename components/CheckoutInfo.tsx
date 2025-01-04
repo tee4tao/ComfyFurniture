@@ -1,6 +1,5 @@
 "use client";
 import { useCart } from "@/context/CartProvider";
-import { createCart } from "@/lib/actions/users.action";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 

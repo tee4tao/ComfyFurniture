@@ -18,6 +18,7 @@ import { signIn, signUp } from "@/lib/actions/users.action";
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState(null);
   const formSchema = authFormSchema(type);
   // console.log(authFormSchema("sign-in"));

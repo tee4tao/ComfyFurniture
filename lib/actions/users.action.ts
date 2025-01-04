@@ -7,6 +7,7 @@ import { parseStringify } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_CART_COLLECTION_ID: CART_COLLECTION_ID,
 } = process.env;

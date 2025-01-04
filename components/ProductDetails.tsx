@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 
 import Image from "next/image";
-import { FiMinus, FiPlus } from "react-icons/fi";
 import {
   FaFacebook,
   FaLinkedin,
@@ -29,6 +28,7 @@ const ProductDetails = ({
   const [quantity, setQuantity] = useState<number>(1);
   const [showCartItems, setShowCartItems] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newData, setNewData] = useState<product[]>(
     data.filter((product) => {
       return product.slug.current !== slug;
@@ -60,7 +60,7 @@ const ProductDetails = ({
 
       {data.map((product: product, index: number) => {
         if (product.slug.current === slug) {
-          const { name, details, imageUrl, price } = product;
+          const { name, imageUrl, price } = product;
           return (
             // <div  key={index} className="container ">
             <article

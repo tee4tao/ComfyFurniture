@@ -3,7 +3,7 @@
 import CheckoutPage from "@/components/CheckoutPage";
 import { useCart } from "@/context/CartProvider";
 import { convertToSubcurrency } from "@/lib/utils";
-import { Element, Elements } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
@@ -13,7 +13,7 @@ if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const page = () => {
-  // Todo: When user logs in, then the cart items should from the user's data and not from the LS again
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { countTotalPrice } = useCart();
   const amount = countTotalPrice();
   return (
