@@ -17,7 +17,7 @@ const page = () => {
   const { countTotalPrice } = useCart();
   const amount = countTotalPrice();
   return (
-    <section className="container mx-auto p-10 max-sm:mt-0 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-secondary to-primary">
+    <section className="container mx-auto p-10 max-sm:mt-0 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-secondary to-primary mb-8">
       <div className="mb-10">
         <h1 className="text-4xl max-sm:text-2xl font-extrabold mb-2">
           Make Payment

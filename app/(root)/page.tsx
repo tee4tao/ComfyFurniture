@@ -25,7 +25,7 @@ const page = async () => {
   const data: product[] = await getData();
 
   return (
-    <div className="w-full flex flex-col items-center space-y-8 mb-4 ">
+    <div className="w-full flex flex-col items-center space-y-8 mb-8 ">
       <Hero />
       <ProductRange />
       <OurProducts data={data} />

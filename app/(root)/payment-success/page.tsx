@@ -10,7 +10,7 @@ export default function PaymentSuccess({
 }) {
   const router = useRouter();
   return (
-    <section className="container mx-auto text-center">
+    <section className="container mx-auto text-center mb-8">
       <div className="mb-10 flex flex-col flex-center px-10">
         <Image
           src={"/images/successful transaction1.gif"}

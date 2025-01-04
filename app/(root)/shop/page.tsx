@@ -20,7 +20,7 @@ async function getData() {
 const Shop = async () => {
   const data: product[] = await getData();
   return (
-    <div className="w-full flex flex-col flex-center">
+    <div className="w-full flex flex-col flex-center mb-8">
       <PageBanner />
       <ShopProducts data={data} />
     </div>

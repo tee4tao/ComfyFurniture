@@ -101,3 +101,26 @@ export const footer = [
     ],
   },
 ];
+
+export const cartBanner = [
+  {
+    icon: "../icons/vector-cart.svg",
+    title: "High Quality",
+    details: "Crafted from top materials",
+  },
+  {
+    icon: "../icons/vector (1).svg",
+    title: "Warrantly Protection",
+    details: "Over 2 years",
+  },
+  {
+    icon: "../icons/vector (2).svg",
+    title: "Free Shipping",
+    details: "Order over 150 $",
+  },
+  {
+    icon: "../icons/vector (3).svg",
+    title: "24/7 Support",
+    details: "Dedicated support",
+  },
+];

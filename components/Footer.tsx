@@ -5,7 +5,7 @@ import Link from "next/link";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="w-full flex flex-col items-center  border-t border-t-gray-300 mt-8 p-2 pt-8 md:p-6 ">
+    <footer className="w-full flex flex-col items-center  border-t border-t-gray-300 p-2 pt-8 md:p-6 ">
       <div className="m-auto block md:flex w-full justify-between  border-b border-b-gray-300 pb-10 text-center lg:px-12">
         <div className="flex flex-col md:gap-2 md:justify-between justify-around  lg:mt-0 w-[90%] md:w-[10%] m-auto">
           {footer.map((data, index) => (

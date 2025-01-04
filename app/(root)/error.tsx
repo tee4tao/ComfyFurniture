@@ -7,7 +7,7 @@ type Props = {
   };
 };
 const error = (error: Props) => {
-  return <div>{error.error.message}</div>;
+  return <div className="mb-8">{error.error.message}</div>;
 };
 
 export default error;
