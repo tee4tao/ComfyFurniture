@@ -8,7 +8,7 @@ const Card = ({ image }: { image: string }) => {
 
   return (
     <motion.div
-      className="relative overflow-hidden h-[200px] min-w-[200px] bg-slate-400 rounded-xl flex justify-center items-center"
+      className="relative overflow-hidden h-[150px] min-w-[150px] bg-slate-400 rounded-xl flex justify-center items-center"
       onMouseEnter={() => setShowOverlay(true)}
       onMouseLeave={() => setShowOverlay(false)}
     >

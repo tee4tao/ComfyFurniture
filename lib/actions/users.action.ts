@@ -10,6 +10,7 @@ const {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_CART_COLLECTION_ID: CART_COLLECTION_ID,
+  APPWRITE_SAVED_ITEMS_COLLECTION_ID: SAVED_ITEMS_COLLECTION_ID,
 } = process.env;
 
 export const signIn = async ({ email, password }: signInProps) => {
@@ -51,6 +52,8 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+// cart database
 
 export const createCart = async ({
   id,
@@ -144,6 +147,62 @@ export const deleteCartItem = async (itemId: string) => {
     const { database } = await createAdminClient();
 
     await database.deleteDocument(DATABASE_ID!, CART_COLLECTION_ID!, itemId!);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// saved items DB
+
+export const createSavedItems = async ({
+  id,
+  name,
+  details,
+  imageUrl,
+  price,
+  user_id,
+}: createSavedItemsProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const cart = await database.createDocument(
+      DATABASE_ID!,
+      SAVED_ITEMS_COLLECTION_ID!,
+      ID.unique(),
+      {
+        id,
+        name,
+        details,
+        imageUrl,
+        price,
+        user_id,
+      },
+      [
+        Permission.read(Role.user(user_id!)),
+        Permission.update(Role.user(user_id!)),
+        Permission.delete(Role.user(user_id!)),
+        Permission.write(Role.user(user_id!)),
+      ]
+    );
+
+    return parseStringify(cart);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSavedItems = async (user_id: string) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const cart = await database.listDocuments(
+      DATABASE_ID!,
+      SAVED_ITEMS_COLLECTION_ID!,
+      [Query.equal("user_id", user_id)]
+    );
+    // console.log(cart.documents);
+
+    return parseStringify(cart);
   } catch (error) {
     console.log(error);
   }

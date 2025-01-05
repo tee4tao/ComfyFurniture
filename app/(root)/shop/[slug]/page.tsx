@@ -38,9 +38,9 @@ const page = async ({ params: { slug } }: Props) => {
   const data: product[] = await getData();
   // console.log(Boolean(data));
 
-  if (!data) {
-    <div>loading</div>;
-  }
+  // if (!data) {
+  //   <div>loading</div>;
+  // }
 
   return (
     <div className="w-screen flex flex-col flex-center mb-8">

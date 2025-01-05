@@ -25,3 +25,12 @@ declare interface createCartProps {
   user_id?: string;
   itemId?: string;
 }
+declare interface createSavedItemsProps {
+  id: string;
+  name: string;
+  details: string;
+  imageUrl: string;
+  price: number;
+  user_id?: string;
+  itemId?: string;
+}

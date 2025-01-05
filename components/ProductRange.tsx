@@ -17,10 +17,10 @@ const ProductRange = () => {
             <Image
               src={item.image}
               alt={item.title}
-              width={200}
-              height={300}
+              width={384}
+              height={483}
               priority={true}
-              className="object-cover md:w-96"
+              // className="object-cover md:w-96"
             />
             <p>{item.title}</p>
           </div>

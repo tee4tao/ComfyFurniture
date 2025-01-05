@@ -3,14 +3,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { CiHeart, CiRead, CiShare2 } from "react-icons/ci";
+import { useCart } from "@/context/CartProvider";
 
 const MotionOverlay = ({
   slug,
   showOverlay,
+  product,
 }: {
   slug: string;
   showOverlay: boolean;
+  product: product;
 }) => {
+  const { updateSavedItems } = useCart();
   return (
     <AnimatePresence>
       {showOverlay && (
@@ -37,7 +41,11 @@ const MotionOverlay = ({
               <Link href={"/"} className="flex items-center">
                 <CiShare2 /> <span>Share</span>
               </Link>
-              <Link href={"/"} className="flex items-center">
+              <Link
+                href={"/"}
+                className="flex items-center"
+                onClick={() => updateSavedItems(product)}
+              >
                 <CiHeart /> <span>Like</span>
               </Link>
             </div>

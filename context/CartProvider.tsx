@@ -1,7 +1,9 @@
 import {
   createCart,
+  createSavedItems,
   getCart,
   getLoggedInUser,
+  getSavedItems,
   updatCartItem,
 } from "@/lib/actions/users.action";
 import React, {
@@ -16,10 +18,15 @@ type cartItem = {
   product: product;
   count: number;
 };
+type savedItem = {
+  product: product;
+};
 
 interface CartContext {
   items: cartItem[];
+  savedItems: savedItem[];
   updateCart(product: product, qty: number): void;
+  updateSavedItems(product: product): void;
   removeFromCart(product: product): void;
   countAllItems(): number;
   countTotalPrice(): number;
@@ -29,7 +36,8 @@ const loggedIn = async () => {
   const user = await getLoggedInUser();
   return user;
 };
-// console.log(loggedIn().then((res) => console.log(res)));
+
+// CART
 
 // To update the cart in the local storage or database if user exists.
 const updateCartInLS = async (products: cartItem[]) => {
@@ -48,8 +56,6 @@ const updateCartInLS = async (products: cartItem[]) => {
           existingItem.details !== cartItem.product.details ||
           existingItem.quantity !== cartItem.count ||
           existingItem.imageUrl !== cartItem.product.imageUrl;
-        // console.log(hasDifferences);
-        // console.log(existingItem.$id);
 
         if (hasDifferences) {
           // Update the existing item
@@ -83,6 +89,8 @@ const updateCartInLS = async (products: cartItem[]) => {
 
 const CartContext = createContext<CartContext>({
   items: [],
+  savedItems: [],
+  updateSavedItems() {},
   updateCart() {},
   removeFromCart() {},
   countAllItems() {
@@ -93,8 +101,54 @@ const CartContext = createContext<CartContext>({
   },
 });
 
+// To update the cart in the local storage or database if user exists.
+const updateSavedItemsInLS = async (products: savedItem[]) => {
+  const loggedIn = await getLoggedInUser();
+  const DBCartItems = await getSavedItems(loggedIn?.$id);
+  if (loggedIn) {
+    products.map(async (cartItem) => {
+      const existingItem = DBCartItems.documents.find(
+        (dbItem: any) => dbItem.id === cartItem.product._id
+      );
+
+      if (existingItem) {
+        // Check if there are differences
+        const hasDifferences =
+          existingItem.name !== cartItem.product.name ||
+          existingItem.details !== cartItem.product.details ||
+          existingItem.imageUrl !== cartItem.product.imageUrl;
+
+        if (hasDifferences) {
+          // Update the existing item
+          await updatCartItem({
+            ...existingItem,
+            itemId: existingItem.$id,
+            name: cartItem.product.name,
+            details: cartItem.product.details,
+            imageUrl: cartItem.product.imageUrl,
+            price: cartItem.product.price,
+          });
+        }
+      } else {
+        // Add a new item if it does not exist
+        await createSavedItems({
+          id: cartItem.product._id,
+          name: cartItem.product.name,
+          details: cartItem.product.details,
+          imageUrl: cartItem.product.imageUrl,
+          price: cartItem.product.price,
+          user_id: loggedIn.$id,
+        });
+      }
+    });
+  } else {
+    localStorage.setItem("savedItems", JSON.stringify(products));
+  }
+};
+
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
+  const [savedItems, setSavedItems] = useState<savedItem[]>([]);
 
   const removeFromCart = (product: product) => {
     const newProducts = cartItems.filter(
@@ -118,6 +172,21 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
     setCartItems(finalCartItems);
     updateCartInLS(finalCartItems);
+  };
+
+  // saved items
+  const updateSavedItems = (product: product) => {
+    const finalCartItems = [...savedItems];
+    const index = cartItems.findIndex(
+      (item) => product._id === item.product._id
+    );
+
+    if (index === -1) {
+      finalCartItems.push({ product });
+    }
+
+    setSavedItems(finalCartItems);
+    updateSavedItemsInLS(finalCartItems);
   };
   // const removeFromCart = (product: product, qty: number) => {
   //   const newProducts = cartItems.map((item) => {
@@ -178,6 +247,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         items: cartItems,
+        savedItems: savedItems,
+        updateSavedItems,
         updateCart,
         removeFromCart,
         countAllItems,
