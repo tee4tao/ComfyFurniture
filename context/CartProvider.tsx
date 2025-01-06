@@ -28,6 +28,7 @@ interface CartContext {
   updateCart(product: product, qty: number): void;
   updateSavedItems(product: product): void;
   removeFromCart(product: product): void;
+  removeFromSavedItems(product: product): void;
   countAllItems(): number;
   countTotalPrice(): number;
 }
@@ -87,48 +88,18 @@ const updateCartInLS = async (products: cartItem[]) => {
   }
 };
 
-const CartContext = createContext<CartContext>({
-  items: [],
-  savedItems: [],
-  updateSavedItems() {},
-  updateCart() {},
-  removeFromCart() {},
-  countAllItems() {
-    return 0;
-  },
-  countTotalPrice() {
-    return 0;
-  },
-});
-
 // To update the cart in the local storage or database if user exists.
 const updateSavedItemsInLS = async (products: savedItem[]) => {
   const loggedIn = await getLoggedInUser();
-  const DBCartItems = await getSavedItems(loggedIn?.$id);
+  const DBSavedItems = await getSavedItems(loggedIn?.$id);
   if (loggedIn) {
     products.map(async (cartItem) => {
-      const existingItem = DBCartItems.documents.find(
+      const existingItem = DBSavedItems.documents.find(
         (dbItem: any) => dbItem.id === cartItem.product._id
       );
 
       if (existingItem) {
-        // Check if there are differences
-        const hasDifferences =
-          existingItem.name !== cartItem.product.name ||
-          existingItem.details !== cartItem.product.details ||
-          existingItem.imageUrl !== cartItem.product.imageUrl;
-
-        if (hasDifferences) {
-          // Update the existing item
-          await updatCartItem({
-            ...existingItem,
-            itemId: existingItem.$id,
-            name: cartItem.product.name,
-            details: cartItem.product.details,
-            imageUrl: cartItem.product.imageUrl,
-            price: cartItem.product.price,
-          });
-        }
+        return;
       } else {
         // Add a new item if it does not exist
         await createSavedItems({
@@ -146,9 +117,25 @@ const updateSavedItemsInLS = async (products: savedItem[]) => {
   }
 };
 
+const CartContext = createContext<CartContext>({
+  items: [],
+  savedItems: [],
+  updateSavedItems() {},
+  updateCart() {},
+  removeFromCart() {},
+  removeFromSavedItems() {},
+  countAllItems() {
+    return 0;
+  },
+  countTotalPrice() {
+    return 0;
+  },
+});
+
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<cartItem[]>([]);
   const [savedItems, setSavedItems] = useState<savedItem[]>([]);
+  // console.log(savedItems);
 
   const removeFromCart = (product: product) => {
     const newProducts = cartItems.filter(
@@ -156,6 +143,13 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     );
     setCartItems(newProducts);
     updateCartInLS(newProducts);
+  };
+  const removeFromSavedItems = (product: product) => {
+    const newProducts = savedItems.filter(
+      (item) => item.product._id !== product._id
+    );
+    setSavedItems(newProducts);
+    updateSavedItemsInLS(newProducts);
   };
 
   const updateCart = (product: product, qty: number) => {
@@ -177,12 +171,14 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   // saved items
   const updateSavedItems = (product: product) => {
     const finalCartItems = [...savedItems];
-    const index = cartItems.findIndex(
+    const index = savedItems.findIndex(
       (item) => product._id === item.product._id
     );
 
     if (index === -1) {
       finalCartItems.push({ product });
+    } else {
+      return;
     }
 
     setSavedItems(finalCartItems);
@@ -228,10 +224,26 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
           }))
           // DBCartItems.documents
         );
+        const DBSavedItems = await getSavedItems(user.$id);
+        setSavedItems(
+          DBSavedItems.documents.map((item: any) => ({
+            product: {
+              _id: item.id,
+              name: item.name,
+              details: item.details,
+              price: item.price,
+              imageUrl: item.imageUrl,
+            },
+          }))
+        );
       } else {
-        const result = localStorage.getItem("cartItems");
-        if (result !== null) {
-          setCartItems(JSON.parse(result));
+        const cartResult = localStorage.getItem("cartItems");
+        const savedItemsResult = localStorage.getItem("savedItems");
+        if (cartResult !== null) {
+          setCartItems(JSON.parse(cartResult));
+        }
+        if (savedItemsResult !== null) {
+          setSavedItems(JSON.parse(savedItemsResult));
         }
       }
     };
@@ -251,6 +263,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         updateSavedItems,
         updateCart,
         removeFromCart,
+        removeFromSavedItems,
         countAllItems,
         countTotalPrice,
       }}

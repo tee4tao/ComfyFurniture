@@ -63,7 +63,7 @@ const CartItemsOverlay = ({
                     <p className="flec items-center md:space-x-4 max-sm:space-x-1">
                       <span>{cartItem.count}</span> <span>x</span>{" "}
                       <span className="text-primary text-sm font-semibold">
-                        #{cartItem.product.price.toFixed(2)}
+                        ${cartItem.product.price.toFixed(2)}
                       </span>
                     </p>
                   </div>
@@ -80,33 +80,6 @@ const CartItemsOverlay = ({
               </div>
             );
           })}
-          {/* <div className="mb-12">
-            <div className="flex items-center justify-between mb-4">
-              <Image
-                src={"/images/Rectangle 38.png"}
-                alt=""
-                width={80}
-                height={80}
-                className="rounded-md max-sm:w-20"
-              />
-              <div className="space-y-2">
-                <p className="text-lg">Asgaard sofa</p>
-                <p className="flec items-center md:space-x-4 max-sm:space-x-1">
-                  <span>1</span> <span>x</span>{" "}
-                  <span className="text-primary text-sm font-semibold">
-                    #20,000.00
-                  </span>
-                </p>
-              </div>
-              <Image
-                src={"../icons/Vector.svg"}
-                alt="remove item button"
-                width={10}
-                height={10}
-                className=""
-              />
-            </div>
-          </div> */}
           {/* subtotal */}
           <div className="flex items-center justify-between border-b border-b-gray-300 pb-4 mb-8">
             <p className="font-semibold">Subtotal</p>

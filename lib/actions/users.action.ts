@@ -207,3 +207,17 @@ export const getSavedItems = async (user_id: string) => {
     console.log(error);
   }
 };
+
+export const deleteSavedItems = async (itemId: string) => {
+  try {
+    const { database } = await createAdminClient();
+
+    await database.deleteDocument(
+      DATABASE_ID!,
+      SAVED_ITEMS_COLLECTION_ID!,
+      itemId!
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { CiHeart, CiRead, CiShare2 } from "react-icons/ci";
 import { useCart } from "@/context/CartProvider";
+import { useRouter } from "next/navigation";
 
 const MotionOverlay = ({
   slug,
@@ -15,6 +16,7 @@ const MotionOverlay = ({
   product: product;
 }) => {
   const { updateSavedItems } = useCart();
+  const router = useRouter();
   return (
     <AnimatePresence>
       {showOverlay && (
@@ -35,19 +37,21 @@ const MotionOverlay = ({
               Add to cart
             </Button>
             <div className="text-white flex flex-wrap flex-center gap-3">
-              <Link href={`/shop/${slug}`} className="flex items-center">
+              <button
+                className="flex items-center"
+                onClick={() => router.push(`/shop/${slug}`)}
+              >
                 <CiRead /> <span>View</span>
-              </Link>
-              <Link href={"/"} className="flex items-center">
+              </button>
+              <button className="flex items-center">
                 <CiShare2 /> <span>Share</span>
-              </Link>
-              <Link
-                href={"/"}
+              </button>
+              <button
                 className="flex items-center"
                 onClick={() => updateSavedItems(product)}
               >
                 <CiHeart /> <span>Like</span>
-              </Link>
+              </button>
             </div>
           </motion.div>
         </motion.div>
