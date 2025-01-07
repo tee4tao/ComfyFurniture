@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
-import Link from "next/link";
 import { CiHeart, CiRead, CiShare2 } from "react-icons/ci";
 import { useCart } from "@/context/CartProvider";
 import { useRouter } from "next/navigation";

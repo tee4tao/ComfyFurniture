@@ -13,6 +13,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { toast } from "react-toastify";
 
 type cartItem = {
   product: product;
@@ -143,6 +144,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     );
     setCartItems(newProducts);
     updateCartInLS(newProducts);
+    toast.error("Item removed from cart!!");
   };
   const removeFromSavedItems = (product: product) => {
     const newProducts = savedItems.filter(
@@ -150,6 +152,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     );
     setSavedItems(newProducts);
     updateSavedItemsInLS(newProducts);
+    toast.error("Item removed!!");
   };
 
   const updateCart = (product: product, qty: number) => {
@@ -166,6 +169,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
     setCartItems(finalCartItems);
     updateCartInLS(finalCartItems);
+    toast.success("Item added to cart!!");
   };
 
   // saved items
@@ -183,18 +187,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
     setSavedItems(finalCartItems);
     updateSavedItemsInLS(finalCartItems);
+    toast.success("Item successfully saved!!");
   };
-  // const removeFromCart = (product: product, qty: number) => {
-  //   const newProducts = cartItems.map((item) => {
-  //     if (product._id === item.product._id) {
-  //       item.count = qty;
-  //     }
-
-  //     return item;
-  //   });
-
-  //   setCartItems(newProducts);
-  // };
 
   const countAllItems = () => {
     return cartItems.reduce((total, cartItem) => total + cartItem.count, 0);

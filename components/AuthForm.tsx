@@ -70,7 +70,7 @@ const AuthForm = ({ type }: { type: string }) => {
   return (
     <section className="flex flex-col flex-center w-full min-h-screen p-4">
       <header className="w-full max-w-96">
-        <ToastContainer position="top-center" />
+        {/* <ToastContainer position="top-center" /> */}
         <div className="flex items-center mb-8">
           <Image
             src={"./icons/logo.svg"}

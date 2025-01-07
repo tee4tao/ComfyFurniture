@@ -9,7 +9,7 @@ const OurProducts = ({ data }: { data: product[] }) => {
     <section className="container flex flex-col items-center px-2">
       <h2 className="text-2xl font-bold text-center mb-4">Our Products</h2>
 
-      <div className="grid lg:grid-cols-4 md:gap-x-12 grid-cols-2 gap-4">
+      <div className="grid grid-cols-4 max-sm:grid-cols-2  gap-4">
         {data.slice(0, 4).map((product) => {
           return <ProductCard product={product} key={product._id} />;
         })}
