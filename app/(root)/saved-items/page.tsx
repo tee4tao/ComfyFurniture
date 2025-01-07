@@ -14,11 +14,10 @@ const SavedItems = () => {
   // todo: change the type of savedItem
   const onDeleteItem = async (savedItem: any) => {
     const loggedIn = await getLoggedInUser();
-    const DBCartItems = await getSavedItems(loggedIn?.$id);
-    console.log(DBCartItems);
+    const DBSavedItems = await getSavedItems(loggedIn?.$id);
     if (loggedIn) {
       deleteSavedItems(
-        DBCartItems.documents.find(
+        DBSavedItems.documents.find(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (dbItem: any) => dbItem.id === savedItem.product._id
         )!.$id

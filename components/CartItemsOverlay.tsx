@@ -1,4 +1,9 @@
 import { useCart } from "@/context/CartProvider";
+import {
+  deleteCartItem,
+  getCart,
+  getLoggedInUser,
+} from "@/lib/actions/users.action";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -26,7 +31,20 @@ const CartItemsOverlay = ({
     }
   };
 
-  console.log(loggedIn);
+  const onDeleteItem = async (cartItem: any) => {
+    const loggedIn = await getLoggedInUser();
+    const DBCartItems = await getCart(loggedIn?.$id);
+    console.log(DBCartItems);
+    if (loggedIn) {
+      deleteCartItem(
+        DBCartItems.documents.find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (dbItem: any) => dbItem.id === cartItem.product._id
+        )!.$id
+      );
+    }
+    removeFromCart(cartItem.product);
+  };
 
   return (
     <div>
@@ -67,7 +85,7 @@ const CartItemsOverlay = ({
                       </span>
                     </p>
                   </div>
-                  <button onClick={() => removeFromCart(cartItem.product)}>
+                  <button onClick={() => onDeleteItem(cartItem)}>
                     <Image
                       src={"../icons/Vector.svg"}
                       alt="remove item button"
