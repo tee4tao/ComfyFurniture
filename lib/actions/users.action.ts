@@ -195,14 +195,14 @@ export const getSavedItems = async (user_id: string) => {
   try {
     const { database } = await createAdminClient();
 
-    const cart = await database.listDocuments(
+    const savedItems = await database.listDocuments(
       DATABASE_ID!,
       SAVED_ITEMS_COLLECTION_ID!,
       [Query.equal("user_id", user_id)]
     );
     // console.log(cart.documents);
 
-    return parseStringify(cart);
+    return parseStringify(savedItems);
   } catch (error) {
     console.log(error);
   }
@@ -219,5 +219,25 @@ export const deleteSavedItems = async (itemId: string) => {
     );
   } catch (error) {
     console.log(error);
+  }
+};
+
+// test
+
+export const clearCart = async (documentIds: [string]) => {
+  const batchSize = 10;
+  const totalBatches = Math.ceil(documentIds.length / batchSize);
+  const { database } = await createAdminClient();
+
+  for (let i = 0; i < totalBatches; i++) {
+    const start = i * batchSize;
+    const end = start + batchSize;
+    const batchIds = documentIds.slice(start, end);
+
+    const promises = batchIds.map((id) => {
+      return database.deleteDocument(DATABASE_ID!, CART_COLLECTION_ID!, id);
+    });
+
+    await Promise.all(promises);
   }
 };

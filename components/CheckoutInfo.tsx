@@ -1,5 +1,10 @@
 "use client";
 import { useCart } from "@/context/CartProvider";
+import {
+  clearCart,
+  getCart,
+  getLoggedInUser,
+} from "@/lib/actions/users.action";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -17,12 +22,16 @@ const CheckoutInfo = () => {
     setCod(true);
   };
 
-  const checkOut = (e: React.FormEvent<HTMLFormElement>) => {
+  const checkOut = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (onlinePayment) {
       router.push("/payment");
     } else if (cod) {
       router.push("/pod");
+      const loggedIn = await getLoggedInUser();
+      const DBCartItems = await getCart(loggedIn?.$id);
+      const findId = DBCartItems.documents.map((item) => item.$id);
+      clearCart(findId);
     }
   };
 
@@ -151,18 +160,18 @@ const CheckoutInfo = () => {
                   <span className="text-gray-300">{item.product.name} </span> x{" "}
                   <span> {item.count}</span>
                 </p>
-                <p># {item.product.price}</p>
+                <p>$ {item.product.price}</p>
               </div>
             );
           })}
           <div className="flex justify-between">
             <p>Subtotal</p>
-            <p className="font-semibold"># {countTotalPrice()}</p>
+            <p className="font-semibold">$ {countTotalPrice()}</p>
           </div>
           <div className="flex justify-between">
             <p>Total</p>
             <p className="text-xl font-bold text-primary">
-              # {countTotalPrice()}
+              $ {countTotalPrice()}
             </p>
           </div>
           {/* payment option */}

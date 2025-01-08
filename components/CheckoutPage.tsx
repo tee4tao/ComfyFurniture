@@ -7,6 +7,11 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { convertToSubcurrency } from "@/lib/utils";
+import {
+  clearCart,
+  getCart,
+  getLoggedInUser,
+} from "@/lib/actions/users.action";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -14,6 +19,13 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // const clearCartAfterPayment = async () => {
+  //   const loggedIn = await getLoggedInUser();
+  //   const DBCartItems = await getCart(loggedIn?.$id);
+  //   const findId = DBCartItems.documents.map((item) => item.$id);
+  //   clearCart(findId);
+  // };
 
   useEffect(() => {
     fetch("/api/create-payment-intent", {
@@ -55,6 +67,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)
       setErrorMessage(error.message);
+      console.log("error", error.message);
     } else {
       // The payment UI automatically closes with a success animation.
       // Your customer is redirected to your `return_url`.

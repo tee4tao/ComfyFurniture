@@ -1,7 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import {
+  clearCart,
+  getCart,
+  getLoggedInUser,
+} from "@/lib/actions/users.action";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function PaymentSuccess({
   searchParams: { amount },
@@ -9,6 +15,17 @@ export default function PaymentSuccess({
   searchParams: { amount: string };
 }) {
   const router = useRouter();
+  // const clearCartAfterPayment = async () => {
+  //   const loggedIn = await getLoggedInUser();
+  //   const DBCartItems = await getCart(loggedIn?.$id);
+  //   const findId = DBCartItems.documents.map((item) => item.$id);
+  //   clearCart(findId);
+  // };
+  // useEffect(() => {
+  //   console.log("clearing cart");
+
+  //   clearCartAfterPayment();
+  // }, []);
   return (
     <section className="container mx-auto text-center mb-8">
       <div className="mb-10 flex flex-col flex-center px-10">

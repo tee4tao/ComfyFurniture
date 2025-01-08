@@ -43,22 +43,14 @@ const CartItems = ({
     countAllItems,
   } = useCart();
 
+  // const findId = DBCartItems.documents.map((item) => item.$id);
+  // console.log(findId.find((id) => id === "677d2956002edba706f0"));
+
   const router = useRouter();
-  // console.log(loggedIn);
 
   const onCheckOut = async () => {
     if (loggedIn) {
       router.push("/checkout");
-      // cartItems.map(async (cartItem) => {
-      //   await createCart({
-      //     ...cartItem,
-      //     id: cartItem.product._id,
-      //     name: cartItem.product.name,
-      //     details: cartItem.product.details,
-      //     quantity: cartItem.count,
-      //     imageUrl: cartItem.product.imageUrl,
-      //   });
-      // });
       await Promise.all(
         cartItems.map(async (cartItem) => {
           const existingItem = DBCartItems.documents.find(
@@ -73,8 +65,6 @@ const CartItems = ({
               existingItem.details !== cartItem.product.details ||
               existingItem.quantity !== cartItem.count ||
               existingItem.imageUrl !== cartItem.product.imageUrl;
-            // console.log(hasDifferences);
-            // console.log(existingItem.$id);
 
             if (hasDifferences) {
               // Update the existing item
@@ -148,10 +138,10 @@ const CartItems = ({
                     />
                     <p className="md:text-lg">{cartItem.product.name}</p>
                   </TableCell>
-                  <TableCell className="">#{cartItem.product.price}</TableCell>
+                  <TableCell className="">${cartItem.product.price}</TableCell>
                   <TableCell>{cartItem.count}</TableCell>
                   <TableCell className="text-right">
-                    #{(cartItem.count * cartItem.product.price).toFixed(2)}
+                    ${(cartItem.count * cartItem.product.price).toFixed(2)}
                   </TableCell>
                   <TableCell className="text-right ">
                     {/* 2222 */}
@@ -178,12 +168,12 @@ const CartItems = ({
             <h2 className="text-2xl font-semibold mb-8">Cart Totals</h2>
             <div className="flex items-center justify-around w-full mb-2">
               <p className="font-semibold">Subtotal</p>
-              <p className="text-sm text-gray-300"># {countTotalPrice()}</p>
+              <p className="text-sm text-gray-300">$ {countTotalPrice()}</p>
             </div>
             <div className="flex items-center justify-around w-full mb-6">
               <p className="font-semibold">Total</p>
               <p className="font-semibold text-primary">
-                # {countTotalPrice()}
+                $ {countTotalPrice()}
               </p>
             </div>
             <button
