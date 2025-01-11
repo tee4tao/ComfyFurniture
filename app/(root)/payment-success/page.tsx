@@ -15,17 +15,24 @@ export default function PaymentSuccess({
   searchParams: { amount: string };
 }) {
   const router = useRouter();
-  // const clearCartAfterPayment = async () => {
-  //   const loggedIn = await getLoggedInUser();
-  //   const DBCartItems = await getCart(loggedIn?.$id);
-  //   const findId = DBCartItems.documents.map((item) => item.$id);
-  //   clearCart(findId);
-  // };
-  // useEffect(() => {
-  //   console.log("clearing cart");
+  const clearCartAfterPayment = async () => {
+    const loggedIn = await getLoggedInUser();
+    const DBCartItems = await getCart(loggedIn?.$id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const findId = DBCartItems.documents.map((item: any) => item.$id);
 
-  //   clearCartAfterPayment();
-  // }, []);
+    if (findId.length !== 0) {
+      clearCart(findId);
+      console.log(`id exists`);
+    } else {
+      console.log(`no ID`);
+    }
+  };
+  useEffect(() => {
+    console.log("clearing cart");
+
+    clearCartAfterPayment();
+  }, []);
   return (
     <section className="container mx-auto text-center mb-8">
       <div className="mb-10 flex flex-col flex-center px-10">

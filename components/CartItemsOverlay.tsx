@@ -31,6 +31,7 @@ const CartItemsOverlay = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onDeleteItem = async (cartItem: any) => {
     const loggedIn = await getLoggedInUser();
     const DBCartItems = await getCart(loggedIn?.$id);

@@ -30,7 +30,8 @@ const CheckoutInfo = () => {
       router.push("/pod");
       const loggedIn = await getLoggedInUser();
       const DBCartItems = await getCart(loggedIn?.$id);
-      const findId = DBCartItems.documents.map((item) => item.$id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const findId = DBCartItems.documents.map((item: any) => item.$id);
       clearCart(findId);
     }
   };

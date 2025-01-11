@@ -12,6 +12,7 @@ import React from "react";
 const SavedItems = () => {
   const { savedItems, removeFromSavedItems, updateCart } = useCart();
   // todo: change the type of savedItem
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onDeleteItem = async (savedItem: any) => {
     const loggedIn = await getLoggedInUser();
     const DBSavedItems = await getSavedItems(loggedIn?.$id);

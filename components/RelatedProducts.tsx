@@ -49,6 +49,7 @@ const RelatedProducts = ({ newData }: { newData: product[] }) => {
                         <MotionOverlay
                           slug={product.slug.current}
                           showOverlay={showOverlay}
+                          product={product}
                         />
                         <Image
                           src={product.imageUrl}

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { signIn, signUp } from "@/lib/actions/users.action";
+import { toast } from "react-toastify";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();

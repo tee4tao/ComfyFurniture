@@ -7,11 +7,6 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { convertToSubcurrency } from "@/lib/utils";
-import {
-  clearCart,
-  getCart,
-  getLoggedInUser,
-} from "@/lib/actions/users.action";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -71,6 +66,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     } else {
       // The payment UI automatically closes with a success animation.
       // Your customer is redirected to your `return_url`.
+      console.log(`payment successful`);
     }
 
     setLoading(false);
