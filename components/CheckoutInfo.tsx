@@ -12,6 +12,7 @@ const CheckoutInfo = () => {
   const router = useRouter();
   const [onlinePayment, setOnlinePayment] = useState(true);
   const [cod, setCod] = useState(false);
+  const { clearCartItems } = useCart();
 
   const payOnline = () => {
     setOnlinePayment(true);
@@ -33,10 +34,9 @@ const CheckoutInfo = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const findId = DBCartItems.documents.map((item: any) => item.$id);
       clearCart(findId);
+      clearCartItems();
     }
   };
-
-  // Todo: When user logs in, then the cart items should from the user's data and not from the LS again
 
   const { items: cartItems, countTotalPrice, countAllItems } = useCart();
   return (

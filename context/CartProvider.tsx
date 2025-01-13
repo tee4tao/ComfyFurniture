@@ -32,6 +32,7 @@ interface CartContext {
   removeFromSavedItems(product: product): void;
   countAllItems(): number;
   countTotalPrice(): number;
+  clearCartItems(): void;
 }
 
 const loggedIn = async () => {
@@ -125,6 +126,7 @@ const CartContext = createContext<CartContext>({
   updateCart() {},
   removeFromCart() {},
   removeFromSavedItems() {},
+  clearCartItems() {},
   countAllItems() {
     return 0;
   },
@@ -153,6 +155,11 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     setSavedItems(newProducts);
     updateSavedItemsInLS(newProducts);
     toast.error("Item removed!!");
+  };
+
+  const clearCartItems = () => {
+    setCartItems([]);
+    // updateCartInLS([]);
   };
 
   const updateCart = (product: product, qty: number) => {
@@ -260,6 +267,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         removeFromSavedItems,
         countAllItems,
         countTotalPrice,
+        clearCartItems,
       }}
     >
       {children}

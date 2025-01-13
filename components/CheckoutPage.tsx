@@ -7,6 +7,7 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { convertToSubcurrency } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -62,11 +63,11 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)
       setErrorMessage(error.message);
-      console.log("error", error.message);
+      // console.log("error", error.message);
+      toast.error(error.message);
     } else {
       // The payment UI automatically closes with a success animation.
       // Your customer is redirected to your `return_url`.
-      console.log(`payment successful`);
     }
 
     setLoading(false);

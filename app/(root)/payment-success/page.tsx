@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+// import { useCart } from "@/context/CartProvider";
 import {
   clearCart,
   getCart,
@@ -15,18 +16,22 @@ export default function PaymentSuccess({
   searchParams: { amount: string };
 }) {
   const router = useRouter();
+  // const { clearCartItems } = useCart();
+
   const clearCartAfterPayment = async () => {
     const loggedIn = await getLoggedInUser();
     const DBCartItems = await getCart(loggedIn?.$id);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const findId = DBCartItems.documents.map((item: any) => item.$id);
 
-    if (findId.length !== 0) {
-      clearCart(findId);
-      console.log(`id exists`);
-    } else {
-      console.log(`no ID`);
-    }
+    clearCart(findId);
+    // clearCartItems();
+    // if (findId.length !== 0) {
+    //   clearCart(findId);
+    //   console.log(`id exists`);
+    // } else {
+    //   console.log(`no ID`);
+    // }
   };
   useEffect(() => {
     console.log("clearing cart");

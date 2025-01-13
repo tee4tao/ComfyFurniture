@@ -16,7 +16,6 @@ const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { countTotalPrice } = useCart();
   const amount = countTotalPrice();
-  // const amount = 40;
   return (
     <section className="container mx-auto p-10 max-sm:mt-0 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-secondary to-primary mb-8">
       <div className="mb-10">
