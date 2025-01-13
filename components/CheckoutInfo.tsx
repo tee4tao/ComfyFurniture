@@ -38,7 +38,7 @@ const CheckoutInfo = () => {
 
   // Todo: When user logs in, then the cart items should from the user's data and not from the LS again
 
-  const { items: cartItems, countTotalPrice } = useCart();
+  const { items: cartItems, countTotalPrice, countAllItems } = useCart();
   return (
     <section className="w-full flex justify-center">
       <form
@@ -228,7 +228,8 @@ const CheckoutInfo = () => {
             {/* Place Order Button */}
             <button
               type="submit"
-              className="mt-6 self-center border w-32 py-3 rounded-md hover:bg-primary transition hover:border-0"
+              disabled={countAllItems() === 0}
+              className={`${countAllItems() === 0 && "hover:cursor-not-allowed hover:bg-gray-300"} mt-6 self-center border w-32 py-3 rounded-md hover:bg-primary hover:cursor-pointer transition hover:border-0`}
             >
               Place order
             </button>
