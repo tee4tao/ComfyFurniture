@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-// import { useCart } from "@/context/CartProvider";
+import { useCart } from "@/context/CartProvider";
 import {
   clearCart,
   getCart,
@@ -16,7 +16,7 @@ export default function PaymentSuccess({
   searchParams: { amount: string };
 }) {
   const router = useRouter();
-  // const { clearCartItems } = useCart();
+  const { clearCartItems } = useCart();
 
   const clearCartAfterPayment = async () => {
     const loggedIn = await getLoggedInUser();
@@ -25,17 +25,9 @@ export default function PaymentSuccess({
     const findId = DBCartItems.documents.map((item: any) => item.$id);
 
     clearCart(findId);
-    // clearCartItems();
-    // if (findId.length !== 0) {
-    //   clearCart(findId);
-    //   console.log(`id exists`);
-    // } else {
-    //   console.log(`no ID`);
-    // }
+    clearCartItems();
   };
   useEffect(() => {
-    console.log("clearing cart");
-
     clearCartAfterPayment();
   }, []);
   return (
