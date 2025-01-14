@@ -7,12 +7,18 @@ import {
 } from "@/lib/actions/users.action";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import AssuranceBanner from "./AssuranceBanner";
 
 const CheckoutInfo = () => {
   const router = useRouter();
   const [onlinePayment, setOnlinePayment] = useState(true);
   const [cod, setCod] = useState(false);
-  const { clearCartItems } = useCart();
+  const {
+    items: cartItems,
+    countTotalPrice,
+    countAllItems,
+    clearCartItems,
+  } = useCart();
 
   const payOnline = () => {
     setOnlinePayment(true);
@@ -38,13 +44,12 @@ const CheckoutInfo = () => {
     }
   };
 
-  const { items: cartItems, countTotalPrice, countAllItems } = useCart();
   return (
-    <section className="w-full flex justify-center">
+    <section className="w-full flex flex-col flex-center">
       <form
         action=""
         onSubmit={checkOut}
-        className="container flex flex-col md:flex-row flex-center md:items-start gap-6 md:justify-around mt-6 px-4"
+        className="container flex flex-col md:flex-row flex-center md:items-start gap-6 md:justify-around my-6 px-4"
       >
         <article className="w-full">
           <h2 className="text-2xl mb-6 font-bold">Billing Details</h2>
@@ -141,7 +146,7 @@ const CheckoutInfo = () => {
               name=""
               id=""
               placeholder="Additional Information"
-              className="border border-gray-300 rounded-md w-full"
+              className="border border-gray-300 rounded-md w-full h-20"
             ></textarea>
           </div>
         </article>
@@ -177,11 +182,6 @@ const CheckoutInfo = () => {
           </div>
           {/* payment option */}
           <div className="border-t flex flex-col border-gray-300">
-            {/* <p className="text-gray-300">
-              Make your payment directly into our bank account. Please use your
-              Order ID as the payment reference. Your order will not be shipped
-              until the funds have cleared in our account.
-            </p> */}
             <div className="space-y-2 mt-4">
               <label className="flex items-center space-x-2">
                 <input
@@ -229,13 +229,14 @@ const CheckoutInfo = () => {
             <button
               type="submit"
               disabled={countAllItems() === 0}
-              className={`${countAllItems() === 0 && "hover:cursor-not-allowed hover:bg-gray-300"} mt-6 self-center border w-32 py-3 rounded-md hover:bg-primary hover:cursor-pointer transition hover:border-0`}
+              className={`${countAllItems() === 0 ? "hover:cursor-not-allowed hover:bg-gray-300" : "hover:bg-primary hover:cursor-pointer"} mt-6 self-center border w-32 py-3 rounded-md  transition hover:border-0`}
             >
               Place order
             </button>
           </div>
         </article>
       </form>
+      <AssuranceBanner />
     </section>
   );
 };

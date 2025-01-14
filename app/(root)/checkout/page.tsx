@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="mb-8">
+    <div className="">
       <PageBanner />
       <CheckoutInfo />
     </div>

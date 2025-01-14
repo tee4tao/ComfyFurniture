@@ -8,7 +8,7 @@ const cart = async () => {
   const DBCartItems = await getCart(loggedIn?.$id);
 
   return (
-    <div className="w-full flex flex-col flex-center mb-8">
+    <div className="w-full flex flex-col flex-center ">
       <PageBanner />
       <CartItems loggedIn={loggedIn} DBCartItems={DBCartItems} />
     </div>
