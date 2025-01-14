@@ -102,7 +102,7 @@ const CartItemsOverlay = ({
           {/* subtotal */}
           <div className="flex items-center justify-between border-b border-b-gray-300 pb-4 mb-8">
             <p className="font-semibold">Subtotal</p>
-            <p className="text-primary font-semibold">#{countTotalPrice()}</p>
+            <p className="text-primary font-semibold">${countTotalPrice()}</p>
           </div>
           {/* buttons */}
           <div className="flex items-center justify-between gap-1 max-sm:text-sm mb-4">
