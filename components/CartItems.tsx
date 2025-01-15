@@ -18,6 +18,7 @@ import {
   updatCartItem,
 } from "@/lib/actions/users.action";
 import AssuranceBanner from "./AssuranceBanner";
+import { IoMdCart } from "react-icons/io";
 
 const CartItems = ({
   loggedIn,
@@ -42,9 +43,6 @@ const CartItems = ({
     countTotalPrice,
     countAllItems,
   } = useCart();
-
-  // const findId = DBCartItems.documents.map((item) => item.$id);
-  // console.log(findId.find((id) => id === "677d2956002edba706f0"));
 
   const router = useRouter();
 
@@ -99,21 +97,20 @@ const CartItems = ({
   };
 
   return (
-    <section className="w-full mt-8 overflow-hidden">
+    <div className="w-full mt-8 overflow-hidden">
       {countAllItems() === 0 ? (
-        <article className="text-center mb-8">
-          <h2 className="text-2xl font-semibold capitalize mb-6">
-            Cart is empty
-          </h2>
+        <section className="flex flex-col flex-center mb-8 space-y-4">
+          <IoMdCart className=" text-white bg-primary rounded-full p-3 w-20 h-20" />
+          <h2 className="text-2xl font-semibold capitalize">Cart is empty</h2>
           <button
             className="border border-gray-500 rounded-xl hover:text-primary hover:border-primary transition-all ease-linear duration-300 max-sm:p-[0.1rem] max-sm:px-2 p-2 px-4"
             onClick={() => router.push("/shop")}
           >
             Continue Shopping
           </button>
-        </article>
+        </section>
       ) : (
-        <article className="flex flex-col md:flex-row flex-center md:justify-around md:items-start gap-4 px-10 mb-8 overflow-hidden">
+        <section className="flex flex-col md:flex-row flex-center md:justify-around md:items-start gap-4 px-10 mb-8 overflow-hidden">
           {/* Cart Table */}
           <Table className="overflow-hidden">
             <TableHeader className="bg-secondary">
@@ -183,11 +180,11 @@ const CartItems = ({
               Checkout
             </button>
           </div>
-        </article>
+        </section>
       )}
 
       <AssuranceBanner />
-    </section>
+    </div>
   );
 };
 

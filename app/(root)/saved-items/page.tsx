@@ -1,4 +1,5 @@
 "use client";
+import AssuranceBanner from "@/components/AssuranceBanner";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartProvider";
 import {
@@ -43,7 +44,7 @@ const SavedItems = () => {
         <section className="flex flex-col flex-center mt-4 mb-8 space-y-4 px-2">
           <FaHeart className=" text-white bg-primary rounded-full p-3 w-20 h-20" />
           <h2 className="text-2xl font-bold">No Saved Item</h2>
-          <p>
+          <p className="text-center">
             Found something you like? Tap on the heart icon to add it to your
             wishlist! All your saved items will appear here.
           </p>
@@ -98,6 +99,7 @@ const SavedItems = () => {
           })}
         </section>
       )}
+      <AssuranceBanner />
     </div>
   );
 };
