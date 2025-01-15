@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { CiHeart, CiRead, CiShare2 } from "react-icons/ci";
 import { useCart } from "@/context/CartProvider";
 import { useRouter } from "next/navigation";
+import { RWebShare } from "react-web-share";
 
 const MotionOverlay = ({
   slug,
@@ -14,7 +15,7 @@ const MotionOverlay = ({
   showOverlay: boolean;
   product: product;
 }) => {
-  const { updateSavedItems } = useCart();
+  const { updateSavedItems, updateCart } = useCart();
   const router = useRouter();
   return (
     <AnimatePresence>
@@ -32,7 +33,10 @@ const MotionOverlay = ({
             animate={{ y: 0 }}
             exit={{ y: 10 }}
           >
-            <Button className="text-primary bg-white hover:text-white w-32 mb-4">
+            <Button
+              className="text-primary bg-white hover:text-white w-32 mb-4"
+              onClick={() => updateCart(product, 1)}
+            >
               Add to cart
             </Button>
             <div className="text-white flex flex-wrap flex-center gap-3">
@@ -42,9 +46,18 @@ const MotionOverlay = ({
               >
                 <CiRead /> <span>View</span>
               </button>
-              <button className="flex items-center">
-                <CiShare2 /> <span>Share</span>
-              </button>
+              <RWebShare
+                data={{
+                  text: `Check out this product I found:`,
+                  url: `http://www.localhost:3000/shop/${slug}`,
+                  title: `${slug}`,
+                }}
+                onClick={() => console.log("shared successfully!")}
+              >
+                <button className="flex items-center">
+                  <CiShare2 /> <span>Share</span>
+                </button>
+              </RWebShare>
               <button
                 className="flex items-center"
                 onClick={() => updateSavedItems(product)}
