@@ -13,6 +13,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Autoplay from "embla-carousel-autoplay";
 import { useRouter } from "next/navigation";
+import { count } from "@/lib/utils";
 
 const RelatedProducts = ({ newData }: { newData: product[] }) => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -56,17 +57,19 @@ const RelatedProducts = ({ newData }: { newData: product[] }) => {
                           alt={product.name}
                           width={200}
                           height={200}
-                          className="object-cover w-full rounded-t-lg"
+                          className="object-cover w-full max-sm:h-64 rounded-t-lg"
                         />
-                        <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-40">
+                        <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-44">
                           <h2 className="text-2xl font-semibold">
                             {product.name}
                           </h2>
                           <p className="text-gray-600 font-semibold">
-                            {product.details}
+                            {count(product.details) < 7
+                              ? `${product.details}`
+                              : `${product.details.slice(0, 30)}...`}
                           </p>
                           <p className="font-semibold text-lg ">
-                            #{product.price}
+                            ${product.price}
                           </p>
                         </div>
                       </div>

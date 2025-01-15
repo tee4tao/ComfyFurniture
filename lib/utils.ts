@@ -54,3 +54,5 @@ export const parseStringify = (value: unknown) =>
 
 export const convertToSubcurrency = (amount: number, factor = 100) =>
   Math.round(amount * factor);
+
+export const count = (s: string) => s.trim().split(/\s+/).length;
