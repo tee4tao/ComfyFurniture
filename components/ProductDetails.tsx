@@ -87,7 +87,7 @@ const ProductDetails = ({
                   <h1 className="text-3xl tracking-wider font-semibold">
                     {name}
                   </h1>
-                  <p className="text-gray-600 font-bold text-lg ">#{price}</p>
+                  <p className="text-gray-600 font-bold text-lg ">${price}</p>
                   <div className="flex gap-2">
                     {stars.map((_, index) => {
                       return (

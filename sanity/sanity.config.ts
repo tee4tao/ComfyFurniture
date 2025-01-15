@@ -8,6 +8,7 @@ export default defineConfig({
   title: 'comfy-furniture',
 
   projectId: 'g9j3dmfa',
+  // projectId: 'edd9co9r',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
