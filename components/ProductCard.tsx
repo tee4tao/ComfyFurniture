@@ -25,7 +25,7 @@ const ProductCard = ({ product }: { product: product }) => {
         priority={true}
         className="object-cover w-full h-60 md:h-80 lg:h-96 rounded-t-lg"
       />
-      <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-40 max-sm:h-64">
+      <div className="bg-[#F4F5F7] p-2 rounded-b-lg space-y-2 h-56 max-sm:h-64">
         <h2 className="text-xl font-semibold">{product.name}</h2>
         <p className="text-gray-600 font-semibold">
           {count(product.details) < 7

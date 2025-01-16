@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 const ShopProducts = ({ data }: { data: product[] }) => {
   const [sortBy, setSortBy] = useState<string | number>("");
 
-  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [itemsDisplayed, setItemsDisplayed] = useState("");
 
   const [visibleData, setVisibleData] = useState(data.slice(0, itemsPerPage));

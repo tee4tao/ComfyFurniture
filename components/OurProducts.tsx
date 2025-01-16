@@ -10,7 +10,7 @@ const OurProducts = ({ data }: { data: product[] }) => {
       <h2 className="text-2xl font-bold text-center mb-4">Our Products</h2>
 
       <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2  gap-4">
-        {data.slice(0, 4).map((product) => {
+        {data.slice(0, 6).map((product) => {
           return <ProductCard product={product} key={product._id} />;
         })}
       </div>
