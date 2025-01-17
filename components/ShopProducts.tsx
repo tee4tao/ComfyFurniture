@@ -17,8 +17,6 @@ const ShopProducts = ({ data }: { data: product[] }) => {
 
   const originalData = useRef([...data]);
 
-  // const [unsortedData, setUnsortedData] = useState([...originalData]);
-
   const total = Math.ceil(data.length / itemsPerPage);
   const pagination = usePagination({
     total,
@@ -29,28 +27,21 @@ const ShopProducts = ({ data }: { data: product[] }) => {
       setVisibleData(data.slice(start, end));
     },
   });
+
   const [flex, setFlex] = useState(false);
   useEffect(() => {
     if (sortBy === "Descending") {
       data.sort((a, b) => b.name.localeCompare(a.name));
       setVisibleData(data.slice(0, itemsPerPage));
-      // pagination.setPage(1);
     }
     if (sortBy === "Ascending") {
       data.sort((a, b) => a.name.localeCompare(b.name));
       setVisibleData(data.slice(0, itemsPerPage));
-      // pagination.setPage(1);
     }
     if (sortBy === "Default" || sortBy === "") {
-      // data = [...originalData];
       setVisibleData(originalData.current.slice(0, itemsPerPage));
     }
   }, [data, itemsPerPage, originalData, sortBy]);
-
-  // const handleShowAmount = (e: React.ChangeEventHandler<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   setItemsPerPage(e.target.value);
-  // };
 
   return (
     <section className="w-full flex flex-col flex-center">
@@ -68,7 +59,11 @@ const ShopProducts = ({ data }: { data: product[] }) => {
           </div>
           <p className="font-bold text-gray-600 hidden max-md:block">|</p>
           <p className=" max-md:text-sm">
-            Showing 1 - {itemsPerPage} of {data.length} results
+            Showing {(pagination.active - 1) * itemsPerPage + 1} -{" "}
+            {pagination.active * itemsPerPage > data.length
+              ? data.length
+              : pagination.active * itemsPerPage}{" "}
+            of {data.length} results
           </p>
         </div>
         <div className="flex items-center justify-around gap-4">
@@ -126,7 +121,9 @@ const ShopProducts = ({ data }: { data: product[] }) => {
         }
       >
         {visibleData.map((product) => {
-          return <ProductCard product={product} key={product._id} />;
+          return (
+            <ProductCard product={product} key={product._id} flex={flex} />
+          );
         })}
       </div>
       {itemsPerPage < data.length && (
