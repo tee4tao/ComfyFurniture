@@ -49,7 +49,7 @@ const MotionOverlay = ({
               <RWebShare
                 data={{
                   text: `Check out this product I found:`,
-                  url: `process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL/shop/${slug}`,
+                  url: `${process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL}/shop/${slug}`,
                   title: `${slug}`,
                 }}
                 onClick={() => console.log("shared successfully!")}
