@@ -64,7 +64,7 @@ const ProductDetails = ({
           return (
             // <div  key={index} className="container ">
             <article
-              className="flex items-start justify-around space-x-12 w-4/5 px-2 max-sm:flex-col max-sm:items-center space-y-4  container "
+              className="container flex md:flex-row md:items-start justify-around space-x-12 flex-col items-center  space-y-4"
               key={index}
             >
               {/* overlay when the cart is displayed */}
@@ -80,7 +80,7 @@ const ProductDetails = ({
                 width={300}
                 height={300}
                 priority={true}
-                className="w-64"
+                className="w-64 h-64 object-cover rounded-lg"
               />
               <div className="">
                 <div className="space-y-2">
