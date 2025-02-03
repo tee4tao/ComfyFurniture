@@ -1,19 +1,25 @@
+import { delay } from "framer-motion";
+
 export const pageLinks = [
   {
     page: "Home",
     url: "/",
+    delay: 1.0,
   },
   {
     page: "Shop",
     url: "/shop",
+    delay: 1.1,
   },
   {
     page: "About",
     url: "/about",
+    delay: 1.2,
   },
   {
     page: "Contact",
     url: "/contact",
+    delay: 1.3,
   },
 ];
 
@@ -21,14 +27,17 @@ export const iconLinks = [
   {
     icon: "../icons/mdi_account-alert-outline.svg",
     url: "/user",
+    delay: 1.4,
   },
   {
     icon: "../icons/akar-icons_heart.svg",
     url: "/saved-items",
+    delay: 1.5,
   },
   {
     icon: "../icons/ant-design_shopping-cart-outlined.svg",
     url: "/cart",
+    delay: 1.6,
   },
 ];
 
