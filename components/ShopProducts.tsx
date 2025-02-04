@@ -120,9 +120,14 @@ const ShopProducts = ({ data }: { data: product[] }) => {
             : `container grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4`
         }
       >
-        {visibleData.map((product) => {
+        {visibleData.map((product, index) => {
           return (
-            <ProductCard product={product} key={product._id} flex={flex} />
+            <ProductCard
+              product={product}
+              key={product._id}
+              flex={flex}
+              index={index}
+            />
           );
         })}
       </div>

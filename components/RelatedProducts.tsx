@@ -26,8 +26,10 @@ const RelatedProducts = ({ newData }: { newData: product[] }) => {
       <div className="container flex flex-col flex-center">
         <h2 className="text-xl font-semibold mb-4">Related Products</h2>
         <div className="hidden md:grid grid-cols-2 md:grid-cols-4 gap-8">
-          {newData.slice(0, 4).map((product) => {
-            return <ProductCard product={product} key={product._id} />;
+          {newData.slice(0, 4).map((product, index) => {
+            return (
+              <ProductCard product={product} key={product._id} index={index} />
+            );
           })}
         </div>
         <Carousel

@@ -47,7 +47,12 @@ const HomePageMotion = () => {
   }, [xTranslation, width, duration, mustFinish, rerender]);
 
   return (
-    <section className="w-[95vw] container flex flex-col items-center px-2 overflow-x-hidden ">
+    <motion.section
+      initial={{ scale: 0.5, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="w-[95vw] container flex flex-col items-center px-2 overflow-x-hidden "
+    >
       {/* max-[669px]:w-[95vw] */}
       <motion.div
         className="flex gap-4"
@@ -68,7 +73,7 @@ const HomePageMotion = () => {
           )
         )}
       </motion.div>
-    </section>
+    </motion.section>
   );
 };
 

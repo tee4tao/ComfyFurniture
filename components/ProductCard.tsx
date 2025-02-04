@@ -4,20 +4,30 @@ import Image from "next/image";
 
 import MotionOverlay from "./MotionOverlay";
 import { count } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const ProductCard = ({
   product,
   flex,
+  index,
 }: {
   product: product;
   flex?: boolean;
+  index: number;
 }) => {
   const slug = product.slug.current;
 
   const [showOverlay, setShowOverlay] = useState(false);
 
   return (
-    <div
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: index % 2 === 0 ? 100 : 0,
+        x: index % 2 === 0 ? 0 : -100,
+      }}
+      whileInView={{ y: 0, x: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
       className="relative"
       onMouseEnter={() => setShowOverlay(true)}
       onMouseLeave={() => setShowOverlay(false)}
@@ -40,7 +50,7 @@ const ProductCard = ({
         </p>
         <p className="font-semibold text-lg ">${product.price}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

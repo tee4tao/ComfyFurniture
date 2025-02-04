@@ -1,11 +1,18 @@
+"use client";
 import { footer } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="w-full flex flex-col items-center  border-t border-t-gray-300 p-2 pt-8 md:p-6 ">
+    <motion.footer
+      initial={{ scale: 0.5, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="w-full flex flex-col items-center  border-t border-t-gray-300 p-2 pt-8 md:p-6 "
+    >
       <div className="m-auto block md:flex w-full justify-between  border-b border-b-gray-300 pb-10 text-center lg:px-12">
         <div className="flex flex-col md:gap-2 md:justify-between justify-around  lg:mt-0 w-[90%] md:w-[10%] m-auto">
           {footer.map((data, index) => (
@@ -72,7 +79,7 @@ const Footer = () => {
           © All Rights Reserved. {year}, ComfyFurniture.
         </h1>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
